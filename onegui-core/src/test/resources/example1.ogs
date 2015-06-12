@@ -1,0 +1,30 @@
+//
+// Comment 1
+//
+style1, style2 {
+	width: 100px;
+	height: 200px;
+	backgroundColor: 
+	#ffffffff;
+	backgroundImage: "resources/image.png";
+	color: #000000ff;
+	marginBottom: 10px;
+	marginLeft: 20px; // Don't forget the milk
+	marginRight: 30px;
+	marginTop: 40px;
+	paddingBottom: 11px;
+	paddingLeft: 22px;
+	paddingRight:33px;paddingTop:44px;
+}
+
+style2 {
+	width: 300px;
+	backgroundImage: none;
+}
+
+style3 {
+	width: 500px;
+}
+
+style4 {
+}
