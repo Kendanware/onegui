@@ -46,6 +46,57 @@ public final class Color implements Serializable, Cloneable {
 
     private static final float MAX_VALUE = 1.0f;
 
+    /** Transparent */
+    public static final Color TRANSPARENT = new Color("#00000000");
+
+    /** HTML white, CGA white */
+    public static final Color WHITE = new Color("#ffffffff");
+
+    /** HTML silver, CGA light gray */
+    public static final Color SILVER = new Color("#c0c0c0ff");
+
+    /** HTML gray, CGA dark gray */
+    public static final Color GRAY = new Color("#808080ff");
+
+    /** HTML black, CGA dark gray */
+    public static final Color BLACK = new Color("#000000ff");
+
+    /** HTML red, CGA high red */
+    public static final Color RED = new Color("#ff0000ff");
+
+    /** HTML maroon, CGA low red */
+    public static final Color MAROON = new Color("#800000ff");
+
+    /** HTML yellow, CGA yellow */
+    public static final Color YELLOW = new Color("#ffff00ff");
+
+    /** HTML olive, CGA brown */
+    public static final Color OLIVE = new Color("#808000ff");
+
+    /** HTML lime, CGA high green */
+    public static final Color LIME = new Color("#00ff00ff");
+
+    /** HTML green, CGA low green */
+    public static final Color GREEN = new Color("#008000ff");
+
+    /** HTML aqua, CGA high cyan */
+    public static final Color AQUA = new Color("#00ffffff");
+
+    /** HTML teal, CGA low cyan */
+    public static final Color TEAL = new Color("#008080ff");
+
+    /** HTML blue, CGA high blue */
+    public static final Color BLUE = new Color("#0000ffff");
+
+    /** HTML navy, CGA low blue */
+    public static final Color NAVY = new Color("#000080ff");
+
+    /** HTML fuchsia, CGA high magneta */
+    public static final Color FUCHSIA = new Color("#ff00ffff");
+
+    /** HTML purple, CGA low magneta */
+    public static final Color PURPLE = new Color("#800080ff");
+
     private final float red;
     private final float green;
     private final float blue;

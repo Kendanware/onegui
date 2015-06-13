@@ -88,10 +88,6 @@ public class StyleParser {
 
     private static final Dimension DIMENSION_0_PIXEL = new Dimension("0.0px");
 
-    private static final Color TRANSPARENT = new Color("#00000000");
-
-    private static final Color WHITE = new Color("#ffffffff");
-
     private static final Set<String> AVAILABLE_PROPERTIES = Collections.unmodifiableSet(new HashSet<>(Arrays.asList(HEIGHT, WIDTH, MARGIN_BOTTOM,
             MARGIN_LEFT, MARGIN_RIGHT, MARGIN_TOP, PADDING_BOTTOM, PADDING_LEFT, PADDING_RIGHT, PADDING_TOP, BACKGROUND_IMAGE, BACKGROUND_COLOR,
             COLOR)));
@@ -280,9 +276,9 @@ public class StyleParser {
 
         return new Style(this.getDimension(properties, WIDTH, DIMESION_100_PERCENT), // width
                 this.getDimension(properties, HEIGHT, DIMESION_100_PERCENT), // height
-                this.getColor(properties, COLOR, WHITE), // color
+                this.getColor(properties, COLOR, Color.WHITE), // color
                 getBackgroundImage(properties), // background image
-                this.getColor(properties, BACKGROUND_COLOR, TRANSPARENT), // background color
+                this.getColor(properties, BACKGROUND_COLOR, Color.TRANSPARENT), // background color
                 this.getDimension(properties, PADDING_LEFT, DIMENSION_0_PIXEL), // padding left
                 this.getDimension(properties, PADDING_RIGHT, DIMENSION_0_PIXEL), // padding right
                 this.getDimension(properties, PADDING_BOTTOM, DIMENSION_0_PIXEL), // padding bottom
