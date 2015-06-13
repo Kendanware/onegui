@@ -3,7 +3,7 @@
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- * 
+ *
  * 1. Redistributions of source code must retain the above copyright notice, this
  *    list of conditions and the following disclaimer.
  *
@@ -14,7 +14,7 @@
  * 3. Neither the name of onegui, Kendanware nor the names of its
  *    contributors may be used to endorse or promote products derived from
  *    this software without specific prior written permission.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
@@ -48,10 +48,10 @@ import com.kendanware.onegui.core.Dimension;
 
 /**
  * Parse onegui style files
- * 
+ *
  * @author Daniel Johansson, Kendanware
  * @author Kenny Colliander Nordin, Kendanware
- * 
+ *
  * @since 0.0.1
  */
 public class StyleParser {
@@ -88,9 +88,10 @@ public class StyleParser {
 
     private static final Dimension DIMENSION_0_PIXEL = new Dimension("0.0px");
 
-    private static final Set<String> AVAILABLE_PROPERTIES = Collections.unmodifiableSet(new HashSet<>(Arrays.asList(HEIGHT, WIDTH, MARGIN_BOTTOM,
-            MARGIN_LEFT, MARGIN_RIGHT, MARGIN_TOP, PADDING_BOTTOM, PADDING_LEFT, PADDING_RIGHT, PADDING_TOP, BACKGROUND_IMAGE, BACKGROUND_COLOR,
-            COLOR)));
+    private static final Set<String> AVAILABLE_PROPERTIES = Collections.unmodifiableSet(new HashSet<>(Arrays.asList(StyleParser.HEIGHT,
+            StyleParser.WIDTH, StyleParser.MARGIN_BOTTOM, StyleParser.MARGIN_LEFT, StyleParser.MARGIN_RIGHT, StyleParser.MARGIN_TOP,
+            StyleParser.PADDING_BOTTOM, StyleParser.PADDING_LEFT, StyleParser.PADDING_RIGHT, StyleParser.PADDING_TOP, StyleParser.BACKGROUND_IMAGE,
+            StyleParser.BACKGROUND_COLOR, StyleParser.COLOR)));
 
     protected enum State {
         STYLE_NAME, PROPERTY, VALUE, COMMENT
@@ -98,7 +99,7 @@ public class StyleParser {
 
     /**
      * Parse a onegui style file (.ogs)
-     * 
+     *
      * @param inputStream
      *            the file
      * @return a map with all compiled styles
@@ -177,7 +178,7 @@ public class StyleParser {
                 state = State.PROPERTY;
             } else if (i == '{') { // start of block definition
 
-                addStyleId(currentStyles, buffer);
+                this.addStyleId(currentStyles, buffer);
                 buffer = new StringBuilder();
                 state = State.PROPERTY;
 
@@ -198,7 +199,7 @@ public class StyleParser {
                     throw new IllegalArgumentException("Misplaced ',' at line " + lineNumber + " and column " + columnNumber);
                 }
 
-                addStyleId(currentStyles, buffer);
+                this.addStyleId(currentStyles, buffer);
                 buffer = new StringBuilder();
 
             } else if (i == '\t') { // tab
@@ -215,20 +216,20 @@ public class StyleParser {
         }
 
         // Produce style objects from raw data
-        for (Map.Entry<String, Map<String, String>> entry : rawData.entrySet()) {
+        for (final Map.Entry<String, Map<String, String>> entry : rawData.entrySet()) {
             styles.put(entry.getKey(), this.getStyle(entry.getValue()));
         }
 
         return Collections.unmodifiableMap(styles);
     }
 
-    private void addStyleProperty(List<String> currentStyles, Map<String, Map<String, String>> data, String property, String value, int lineNumber,
-            int columnNumber) {
+    private void addStyleProperty(final List<String> currentStyles, final Map<String, Map<String, String>> data, final String property,
+            final String value, final int lineNumber, final int columnNumber) {
         if (currentStyles.isEmpty()) {
             throw new IllegalArgumentException("No style name found at line " + lineNumber + " and column " + columnNumber);
         }
 
-        if (!AVAILABLE_PROPERTIES.contains(property)) {
+        if (!StyleParser.AVAILABLE_PROPERTIES.contains(property)) {
             throw new IllegalArgumentException("Invalid property name \"" + property + "\" at line " + lineNumber + " and column " + columnNumber);
         }
 
@@ -239,12 +240,12 @@ public class StyleParser {
                 data.put(styleName, properties);
             }
 
-            LOG.trace("Add style property {} and value {} for style name {}", property, value, styleName);
+            StyleParser.LOG.trace("Add style property {} and value {} for style name {}", property, value, styleName);
             properties.put(property, value);
         }
     }
 
-    protected void addStyleId(final List<String> currentStyles, StringBuilder buffer) {
+    protected void addStyleId(final List<String> currentStyles, final StringBuilder buffer) {
         final String name = buffer.toString().trim();
 
         if (!name.isEmpty()) {
@@ -252,7 +253,7 @@ public class StyleParser {
         }
     }
 
-    protected String getProperty(StringBuilder buffer, int lineNumber, int columnNumber) {
+    protected String getProperty(final StringBuilder buffer, final int lineNumber, final int columnNumber) {
         final String property = buffer.toString().trim();
 
         if (property.isEmpty()) {
@@ -262,7 +263,7 @@ public class StyleParser {
         return property;
     }
 
-    protected String getValue(StringBuilder buffer, int lineNumber, int columnNumber) {
+    protected String getValue(final StringBuilder buffer, final int lineNumber, final int columnNumber) {
         final String value = buffer.toString().trim();
 
         if (value.isEmpty()) {
@@ -272,36 +273,36 @@ public class StyleParser {
         return value;
     }
 
-    protected Style getStyle(Map<String, String> properties) {
+    protected Style getStyle(final Map<String, String> properties) {
 
-        return new Style(this.getDimension(properties, WIDTH, DIMESION_100_PERCENT), // width
-                this.getDimension(properties, HEIGHT, DIMESION_100_PERCENT), // height
-                this.getColor(properties, COLOR, Color.WHITE), // color
-                getBackgroundImage(properties), // background image
-                this.getColor(properties, BACKGROUND_COLOR, Color.TRANSPARENT), // background color
-                this.getDimension(properties, PADDING_LEFT, DIMENSION_0_PIXEL), // padding left
-                this.getDimension(properties, PADDING_RIGHT, DIMENSION_0_PIXEL), // padding right
-                this.getDimension(properties, PADDING_BOTTOM, DIMENSION_0_PIXEL), // padding bottom
-                this.getDimension(properties, PADDING_TOP, DIMENSION_0_PIXEL), // padding top
-                this.getDimension(properties, MARGIN_LEFT, DIMENSION_0_PIXEL), // margin left
-                this.getDimension(properties, MARGIN_RIGHT, DIMENSION_0_PIXEL), // margin right
-                this.getDimension(properties, MARGIN_BOTTOM, DIMENSION_0_PIXEL), // margin bottom
-                this.getDimension(properties, MARGIN_TOP, DIMENSION_0_PIXEL)); // margin top
+        return new Style(this.getDimension(properties, StyleParser.WIDTH, StyleParser.DIMESION_100_PERCENT), // width
+                this.getDimension(properties, StyleParser.HEIGHT, StyleParser.DIMESION_100_PERCENT), // height
+                this.getColor(properties, StyleParser.COLOR, Color.WHITE), // color
+                this.getBackgroundImage(properties), // background image
+                this.getColor(properties, StyleParser.BACKGROUND_COLOR, Color.TRANSPARENT), // background color
+                this.getDimension(properties, StyleParser.PADDING_LEFT, StyleParser.DIMENSION_0_PIXEL), // padding left
+                this.getDimension(properties, StyleParser.PADDING_RIGHT, StyleParser.DIMENSION_0_PIXEL), // padding right
+                this.getDimension(properties, StyleParser.PADDING_BOTTOM, StyleParser.DIMENSION_0_PIXEL), // padding bottom
+                this.getDimension(properties, StyleParser.PADDING_TOP, StyleParser.DIMENSION_0_PIXEL), // padding top
+                this.getDimension(properties, StyleParser.MARGIN_LEFT, StyleParser.DIMENSION_0_PIXEL), // margin left
+                this.getDimension(properties, StyleParser.MARGIN_RIGHT, StyleParser.DIMENSION_0_PIXEL), // margin right
+                this.getDimension(properties, StyleParser.MARGIN_BOTTOM, StyleParser.DIMENSION_0_PIXEL), // margin bottom
+                this.getDimension(properties, StyleParser.MARGIN_TOP, StyleParser.DIMENSION_0_PIXEL)); // margin top
     }
 
-    protected Color getColor(Map<String, String> properties, String property, Color defaultValue) {
-        String value = properties.get(property);
-        if (value == null || value.isEmpty()) {
+    protected Color getColor(final Map<String, String> properties, final String property, final Color defaultValue) {
+        final String value = properties.get(property);
+        if ((value == null) || value.isEmpty()) {
             return defaultValue;
         }
 
         return new Color(value);
     }
 
-    protected Dimension getDimension(Map<String, String> properties, String property, Dimension defaultValue) {
+    protected Dimension getDimension(final Map<String, String> properties, final String property, final Dimension defaultValue) {
 
         final String value = properties.get(property);
-        if (value == null || value.isEmpty()) {
+        if ((value == null) || value.isEmpty()) {
             return defaultValue;
         }
 
@@ -309,9 +310,9 @@ public class StyleParser {
     }
 
     protected String getBackgroundImage(final Map<String, String> properties) {
-        final String value = properties.get(BACKGROUND_IMAGE);
+        final String value = properties.get(StyleParser.BACKGROUND_IMAGE);
 
-        if (value == null || value.isEmpty()) {
+        if ((value == null) || value.isEmpty()) {
             return null;
         }
 

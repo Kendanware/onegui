@@ -3,7 +3,7 @@
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- * 
+ *
  * 1. Redistributions of source code must retain the above copyright notice, this
  *    list of conditions and the following disclaimer.
  *
@@ -14,7 +14,7 @@
  * 3. Neither the name of onegui, Kendanware nor the names of its
  *    contributors may be used to endorse or promote products derived from
  *    this software without specific prior written permission.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
@@ -32,19 +32,19 @@ import com.kendanware.onegui.core.Container;
 
 /**
  * The <code>Panel</code> is used for presentation areas
- * 
+ *
  * @author Daniel Johansson, Kendanware
  * @author Kenny Colliander Nordin, Kendanware
- * 
+ *
  * @since 0.0.1
  */
 public class Panel extends Container {
 
-    public Panel(Container parent) {
+    public Panel(final Container parent) {
         super(parent);
     }
 
-    public Panel(Container parent, String id) {
+    public Panel(final Container parent, final String id) {
         super(parent, id);
     }
 

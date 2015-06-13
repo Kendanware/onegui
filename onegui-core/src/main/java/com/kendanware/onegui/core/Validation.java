@@ -3,7 +3,7 @@
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- * 
+ *
  * 1. Redistributions of source code must retain the above copyright notice, this
  *    list of conditions and the following disclaimer.
  *
@@ -14,7 +14,7 @@
  * 3. Neither the name of onegui, Kendanware nor the names of its
  *    contributors may be used to endorse or promote products derived from
  *    this software without specific prior written permission.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
@@ -32,17 +32,17 @@ import java.util.List;
 
 /**
  * Contains various validation methods.
- * 
+ *
  * @author Daniel Johansson, Kendanware
  * @author Kenny Colliander Nordin, Kendanware
- * 
+ *
  * @since 0.0.1
  */
 public class Validation {
 
     /**
      * Check that the id is unique. Scan the tree of components for the id
-     * 
+     *
      * @param id
      *            the id to check
      * @throws IllegalArgumentException
@@ -50,7 +50,7 @@ public class Validation {
      */
     public static void checkId(final Component component, final String id) {
 
-        if (id == null || id.trim().isEmpty()) {
+        if ((id == null) || id.trim().isEmpty()) {
             throw new IllegalArgumentException("Invalid id: " + id);
         }
 
@@ -63,7 +63,7 @@ public class Validation {
             parent = parent.getParent();
         }
 
-        checkIdTraverse(component, id);
+        Validation.checkIdTraverse(component, id);
     }
 
     protected static void checkIdTraverse(final Component component, final String id) {
@@ -78,7 +78,7 @@ public class Validation {
             final List<Component> list = container.getChildren();
 
             for (final Component child : list) {
-                checkId(child, id);
+                Validation.checkId(child, id);
             }
         }
     }

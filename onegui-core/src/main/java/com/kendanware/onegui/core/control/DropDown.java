@@ -3,7 +3,7 @@
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- * 
+ *
  * 1. Redistributions of source code must retain the above copyright notice, this
  *    list of conditions and the following disclaimer.
  *
@@ -14,7 +14,7 @@
  * 3. Neither the name of onegui, Kendanware nor the names of its
  *    contributors may be used to endorse or promote products derived from
  *    this software without specific prior written permission.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
@@ -34,23 +34,23 @@ import com.kendanware.onegui.core.Container;
 import com.kendanware.onegui.core.Control;
 
 /**
- * 
+ *
  * @author Daniel Johansson, Kendanware
  * @author Kenny Colliander Nordin, Kendanware
- * 
+ *
  * @since 0.0.1
  */
 public class DropDown<K> extends Control {
 
-    public DropDown(Container parent) {
+    public DropDown(final Container parent) {
         super(parent);
     }
 
-    public DropDown(Container parent, String id) {
+    public DropDown(final Container parent, final String id) {
         super(parent, id);
     }
 
-    public void setOptions(List<Option<K>> options) {
+    public void setOptions(final List<Option<K>> options) {
         // TODO: implement
 
     }
@@ -65,7 +65,7 @@ public class DropDown<K> extends Control {
         return null;
     }
 
-    public void setSelected(K key) {
+    public void setSelected(final K key) {
         // TODO: implement
     }
 

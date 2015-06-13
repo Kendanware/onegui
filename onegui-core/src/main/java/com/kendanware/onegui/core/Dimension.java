@@ -3,7 +3,7 @@
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- * 
+ *
  * 1. Redistributions of source code must retain the above copyright notice, this
  *    list of conditions and the following disclaimer.
  *
@@ -14,7 +14,7 @@
  * 3. Neither the name of onegui, Kendanware nor the names of its
  *    contributors may be used to endorse or promote products derived from
  *    this software without specific prior written permission.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
@@ -30,10 +30,10 @@ package com.kendanware.onegui.core;
 
 /**
  * Immutable object that stores a size and dimension type.
- * 
+ *
  * @author Daniel Johansson, Kendanware
  * @author Kenny Colliander Nordin, Kendanware
- * 
+ *
  * @since 0.0.1
  */
 public final class Dimension {
@@ -44,7 +44,7 @@ public final class Dimension {
 
     /**
      * Constructor
-     * 
+     *
      * @param type
      *            the type
      * @param size
@@ -62,7 +62,7 @@ public final class Dimension {
 
     /**
      * Construct a dimension based on a string representation.
-     * 
+     *
      * @param stringValue
      *            the string value with dimension type suffix
      */
@@ -76,43 +76,48 @@ public final class Dimension {
      * @return the dimesion type
      */
     public DimensionType getType() {
-        return type;
+        return this.type;
     }
 
     /**
      * @return the size, the type is defined by {@link #getType()}
      */
     public float getSize() {
-        return size;
+        return this.size;
     }
 
     @Override
     public int hashCode() {
         final int prime = 31;
         int result = 1;
-        result = prime * result + ((type == null) ? 0 : type.hashCode());
-        result = prime * result + Float.floatToIntBits(size);
+        result = (prime * result) + ((this.type == null) ? 0 : this.type.hashCode());
+        result = (prime * result) + Float.floatToIntBits(this.size);
         return result;
     }
 
     @Override
-    public boolean equals(Object obj) {
-        if (this == obj)
+    public boolean equals(final Object obj) {
+        if (this == obj) {
             return true;
-        if (obj == null)
+        }
+        if (obj == null) {
             return false;
-        if (getClass() != obj.getClass())
+        }
+        if (this.getClass() != obj.getClass()) {
             return false;
-        Dimension other = (Dimension) obj;
-        if (type != other.type)
+        }
+        final Dimension other = (Dimension) obj;
+        if (this.type != other.type) {
             return false;
-        if (Float.floatToIntBits(size) != Float.floatToIntBits(other.size))
+        }
+        if (Float.floatToIntBits(this.size) != Float.floatToIntBits(other.size)) {
             return false;
+        }
         return true;
     }
 
     @Override
     public String toString() {
-        return "Dimension [type=" + type + ", size=" + size + "]";
+        return "Dimension [type=" + this.type + ", size=" + this.size + "]";
     }
 }

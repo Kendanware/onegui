@@ -3,7 +3,7 @@
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- * 
+ *
  * 1. Redistributions of source code must retain the above copyright notice, this
  *    list of conditions and the following disclaimer.
  *
@@ -14,7 +14,7 @@
  * 3. Neither the name of onegui, Kendanware nor the names of its
  *    contributors may be used to endorse or promote products derived from
  *    this software without specific prior written permission.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
@@ -28,8 +28,6 @@
  */
 package com.kendanware.onegui.core;
 
-import static org.junit.Assert.*;
-
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.ObjectInputStream;
@@ -37,9 +35,8 @@ import java.io.ObjectOutputStream;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.junit.Assert;
 import org.junit.Test;
-
-import com.kendanware.onegui.core.Color;
 
 public class ColorTest {
 
@@ -53,145 +50,145 @@ public class ColorTest {
 
     @Test
     public void testColorFloatFloatFloatFloat() {
-        Color color = new Color(RED_1, GREEN_1, BLUE_1, ALPHA_1);
+        final Color color = new Color(ColorTest.RED_1, ColorTest.GREEN_1, ColorTest.BLUE_1, ColorTest.ALPHA_1);
 
-        assertEquals(RED_1, color.getRed(), 0.001f);
-        assertEquals(GREEN_1, color.getGreen(), 0.001f);
-        assertEquals(BLUE_1, color.getBlue(), 0.001f);
-        assertEquals(ALPHA_1, color.getAlpha(), 0.001f);
+        Assert.assertEquals(ColorTest.RED_1, color.getRed(), 0.001f);
+        Assert.assertEquals(ColorTest.GREEN_1, color.getGreen(), 0.001f);
+        Assert.assertEquals(ColorTest.BLUE_1, color.getBlue(), 0.001f);
+        Assert.assertEquals(ColorTest.ALPHA_1, color.getAlpha(), 0.001f);
     }
 
     @Test
     public void testColorFloatFloatFloatFloatRanges() {
         try {
-            new Color(LOW_VALUE, GREEN_1, BLUE_1, ALPHA_1);
-            fail();
-        } catch (IllegalArgumentException e) {
+            new Color(ColorTest.LOW_VALUE, ColorTest.GREEN_1, ColorTest.BLUE_1, ColorTest.ALPHA_1);
+            Assert.fail();
+        } catch (final IllegalArgumentException e) {
         }
         try {
-            new Color(HIGH_VALUE, GREEN_1, BLUE_1, ALPHA_1);
-            fail();
-        } catch (IllegalArgumentException e) {
-        }
-
-        try {
-            new Color(RED_1, LOW_VALUE, BLUE_1, ALPHA_1);
-            fail();
-        } catch (IllegalArgumentException e) {
-        }
-        try {
-            new Color(RED_1, HIGH_VALUE, BLUE_1, ALPHA_1);
-            fail();
-        } catch (IllegalArgumentException e) {
+            new Color(ColorTest.HIGH_VALUE, ColorTest.GREEN_1, ColorTest.BLUE_1, ColorTest.ALPHA_1);
+            Assert.fail();
+        } catch (final IllegalArgumentException e) {
         }
 
         try {
-            new Color(RED_1, GREEN_1, LOW_VALUE, ALPHA_1);
-            fail();
-        } catch (IllegalArgumentException e) {
+            new Color(ColorTest.RED_1, ColorTest.LOW_VALUE, ColorTest.BLUE_1, ColorTest.ALPHA_1);
+            Assert.fail();
+        } catch (final IllegalArgumentException e) {
         }
         try {
-            new Color(RED_1, GREEN_1, HIGH_VALUE, ALPHA_1);
-            fail();
-        } catch (IllegalArgumentException e) {
+            new Color(ColorTest.RED_1, ColorTest.HIGH_VALUE, ColorTest.BLUE_1, ColorTest.ALPHA_1);
+            Assert.fail();
+        } catch (final IllegalArgumentException e) {
         }
 
         try {
-            new Color(RED_1, GREEN_1, BLUE_1, LOW_VALUE);
-            fail();
-        } catch (IllegalArgumentException e) {
+            new Color(ColorTest.RED_1, ColorTest.GREEN_1, ColorTest.LOW_VALUE, ColorTest.ALPHA_1);
+            Assert.fail();
+        } catch (final IllegalArgumentException e) {
         }
         try {
-            new Color(RED_1, GREEN_1, BLUE_1, HIGH_VALUE);
-            fail();
-        } catch (IllegalArgumentException e) {
+            new Color(ColorTest.RED_1, ColorTest.GREEN_1, ColorTest.HIGH_VALUE, ColorTest.ALPHA_1);
+            Assert.fail();
+        } catch (final IllegalArgumentException e) {
+        }
+
+        try {
+            new Color(ColorTest.RED_1, ColorTest.GREEN_1, ColorTest.BLUE_1, ColorTest.LOW_VALUE);
+            Assert.fail();
+        } catch (final IllegalArgumentException e) {
+        }
+        try {
+            new Color(ColorTest.RED_1, ColorTest.GREEN_1, ColorTest.BLUE_1, ColorTest.HIGH_VALUE);
+            Assert.fail();
+        } catch (final IllegalArgumentException e) {
         }
     }
 
     @Test
     public void testColorString() {
-        Color color = new Color("#1a344Eff");
+        final Color color = new Color("#1a344Eff");
 
-        assertEquals(RED_1, color.getRed(), 0.01f);
-        assertEquals(GREEN_1, color.getGreen(), 0.01f);
-        assertEquals(BLUE_1, color.getBlue(), 0.01f);
-        assertEquals(ALPHA_1, color.getAlpha(), 0.01f);
+        Assert.assertEquals(ColorTest.RED_1, color.getRed(), 0.01f);
+        Assert.assertEquals(ColorTest.GREEN_1, color.getGreen(), 0.01f);
+        Assert.assertEquals(ColorTest.BLUE_1, color.getBlue(), 0.01f);
+        Assert.assertEquals(ColorTest.ALPHA_1, color.getAlpha(), 0.01f);
 
-        Color color2 = new Color("#ffffffff");
+        final Color color2 = new Color("#ffffffff");
 
-        assertEquals(1.0f, color2.getRed(), 0.01f);
-        assertEquals(1.0f, color2.getGreen(), 0.01f);
-        assertEquals(1.0f, color2.getBlue(), 0.01f);
-        assertEquals(1.0f, color2.getAlpha(), 0.01f);
+        Assert.assertEquals(1.0f, color2.getRed(), 0.01f);
+        Assert.assertEquals(1.0f, color2.getGreen(), 0.01f);
+        Assert.assertEquals(1.0f, color2.getBlue(), 0.01f);
+        Assert.assertEquals(1.0f, color2.getAlpha(), 0.01f);
     }
 
     @Test
     public void testColorStringRanges() {
         try {
             new Color("1a344Eff");
-            fail();
-        } catch (IllegalArgumentException e) {
+            Assert.fail();
+        } catch (final IllegalArgumentException e) {
         }
 
         try {
             new Color("#1a344Efh");
-            fail();
-        } catch (IllegalArgumentException e) {
+            Assert.fail();
+        } catch (final IllegalArgumentException e) {
         }
 
         try {
             new Color("#1a344E");
-            fail();
-        } catch (IllegalArgumentException e) {
+            Assert.fail();
+        } catch (final IllegalArgumentException e) {
         }
         try {
             new Color(null);
-            fail();
-        } catch (IllegalArgumentException e) {
+            Assert.fail();
+        } catch (final IllegalArgumentException e) {
         }
 
         try {
             new Color("");
-            fail();
-        } catch (IllegalArgumentException e) {
+            Assert.fail();
+        } catch (final IllegalArgumentException e) {
         }
     }
 
     @Test
     public void testSerializable() throws Exception {
 
-        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-        ObjectOutputStream objectOutputStream = new ObjectOutputStream(byteArrayOutputStream);
+        final ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        final ObjectOutputStream objectOutputStream = new ObjectOutputStream(byteArrayOutputStream);
 
-        Color color = new Color(0.0f, 0.5f, 1.0f, 0.8f);
+        final Color color = new Color(0.0f, 0.5f, 1.0f, 0.8f);
 
         objectOutputStream.writeObject(color);
         objectOutputStream.close();
 
-        ObjectInputStream objectInputStream = new ObjectInputStream(new ByteArrayInputStream(byteArrayOutputStream.toByteArray()));
+        final ObjectInputStream objectInputStream = new ObjectInputStream(new ByteArrayInputStream(byteArrayOutputStream.toByteArray()));
 
-        Color copy = (Color) objectInputStream.readObject();
+        final Color copy = (Color) objectInputStream.readObject();
 
-        assertEquals(color, copy);
+        Assert.assertEquals(color, copy);
         objectInputStream.close();
     }
 
     @Test
     public void testEqualsAndHash() {
-        Color color = new Color(0.0f, 0.5f, 1.0f, 0.8f);
-        Color colorSimilar = new Color(0.0f, 0.5f, 1.0f, 0.8f);
-        Color color1 = new Color(0.9f, 0.5f, 1.0f, 0.8f);
-        Color color2 = new Color(0.0f, 0.6f, 1.0f, 0.8f);
-        Color color3 = new Color(0.0f, 0.5f, 0.9f, 0.8f);
-        Color color4 = new Color(0.0f, 0.5f, 1.0f, 0.9f);
+        final Color color = new Color(0.0f, 0.5f, 1.0f, 0.8f);
+        final Color colorSimilar = new Color(0.0f, 0.5f, 1.0f, 0.8f);
+        final Color color1 = new Color(0.9f, 0.5f, 1.0f, 0.8f);
+        final Color color2 = new Color(0.0f, 0.6f, 1.0f, 0.8f);
+        final Color color3 = new Color(0.0f, 0.5f, 0.9f, 0.8f);
+        final Color color4 = new Color(0.0f, 0.5f, 1.0f, 0.9f);
 
-        assertTrue(color.equals(colorSimilar));
-        assertFalse(color.equals(color1));
-        assertFalse(color.equals(color2));
-        assertFalse(color.equals(color3));
-        assertFalse(color.equals(color4));
+        Assert.assertTrue(color.equals(colorSimilar));
+        Assert.assertFalse(color.equals(color1));
+        Assert.assertFalse(color.equals(color2));
+        Assert.assertFalse(color.equals(color3));
+        Assert.assertFalse(color.equals(color4));
 
-        Set<Color> set = new HashSet<Color>();
+        final Set<Color> set = new HashSet<Color>();
 
         set.add(color);
         set.add(color1);
@@ -199,18 +196,18 @@ public class ColorTest {
         set.add(color3);
         set.add(color4);
 
-        assertEquals(5, set.size());
+        Assert.assertEquals(5, set.size());
 
         set.add(colorSimilar);
-        assertEquals(5, set.size());
+        Assert.assertEquals(5, set.size());
     }
 
     @Test
     public void testClone() throws Exception {
-        Color color = new Color(0.0f, 0.5f, 1.0f, 0.8f);
-        Color colorSimilar = ((Color) color.clone());
+        final Color color = new Color(0.0f, 0.5f, 1.0f, 0.8f);
+        final Color colorSimilar = ((Color) color.clone());
 
-        assertSame(color, colorSimilar);
+        Assert.assertSame(color, colorSimilar);
     }
 
 }

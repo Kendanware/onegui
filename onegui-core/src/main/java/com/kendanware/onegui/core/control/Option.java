@@ -3,7 +3,7 @@
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- * 
+ *
  * 1. Redistributions of source code must retain the above copyright notice, this
  *    list of conditions and the following disclaimer.
  *
@@ -14,7 +14,7 @@
  * 3. Neither the name of onegui, Kendanware nor the names of its
  *    contributors may be used to endorse or promote products derived from
  *    this software without specific prior written permission.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
@@ -29,10 +29,10 @@
 package com.kendanware.onegui.core.control;
 
 /**
- * 
+ *
  * @author Daniel Johansson, Kendanware
  * @author Kenny Colliander Nordin, Kendanware
- * 
+ *
  * @since 0.0.1
  */
 public class Option<K> {
@@ -45,25 +45,25 @@ public class Option<K> {
         super();
     }
 
-    public Option(K key, String text) {
+    public Option(final K key, final String text) {
         super();
         this.key = key;
         this.text = text;
     }
 
     public K getKey() {
-        return key;
+        return this.key;
     }
 
-    public void setKey(K key) {
+    public void setKey(final K key) {
         this.key = key;
     }
 
     public String getText() {
-        return text;
+        return this.text;
     }
 
-    public void setText(String text) {
+    public void setText(final String text) {
         this.text = text;
     }
 
@@ -71,36 +71,43 @@ public class Option<K> {
     public int hashCode() {
         final int prime = 31;
         int result = 1;
-        result = prime * result + ((key == null) ? 0 : key.hashCode());
-        result = prime * result + ((text == null) ? 0 : text.hashCode());
+        result = (prime * result) + ((this.key == null) ? 0 : this.key.hashCode());
+        result = (prime * result) + ((this.text == null) ? 0 : this.text.hashCode());
         return result;
     }
 
     @SuppressWarnings("rawtypes")
     @Override
-    public boolean equals(Object obj) {
-        if (this == obj)
+    public boolean equals(final Object obj) {
+        if (this == obj) {
             return true;
-        if (obj == null)
+        }
+        if (obj == null) {
             return false;
-        if (getClass() != obj.getClass())
+        }
+        if (this.getClass() != obj.getClass()) {
             return false;
-        Option other = (Option) obj;
-        if (key == null) {
-            if (other.key != null)
+        }
+        final Option other = (Option) obj;
+        if (this.key == null) {
+            if (other.key != null) {
                 return false;
-        } else if (!key.equals(other.key))
+            }
+        } else if (!this.key.equals(other.key)) {
             return false;
-        if (text == null) {
-            if (other.text != null)
+        }
+        if (this.text == null) {
+            if (other.text != null) {
                 return false;
-        } else if (!text.equals(other.text))
+            }
+        } else if (!this.text.equals(other.text)) {
             return false;
+        }
         return true;
     }
 
     @Override
     public String toString() {
-        return "Option [key=" + key + ", text=" + text + "]";
+        return "Option [key=" + this.key + ", text=" + this.text + "]";
     }
 }

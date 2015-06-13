@@ -3,7 +3,7 @@
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- * 
+ *
  * 1. Redistributions of source code must retain the above copyright notice, this
  *    list of conditions and the following disclaimer.
  *
@@ -14,7 +14,7 @@
  * 3. Neither the name of onegui, Kendanware nor the names of its
  *    contributors may be used to endorse or promote products derived from
  *    this software without specific prior written permission.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
@@ -28,22 +28,21 @@
  */
 package com.kendanware.onegui.core;
 
-import static org.junit.Assert.*;
-
+import org.junit.Assert;
 import org.junit.Test;
 
 public class DimensionTest {
 
     @Test
     public void test() {
-        assertEquals(new Dimension(DimensionType.PERCENT, 1.0f), new Dimension("1.0%"));
-        assertEquals(new Dimension(DimensionType.PERCENT_HEIGHT, 1.0f), new Dimension("1.0%h"));
-        assertEquals(new Dimension(DimensionType.PERCENT_WIDTH, 1.0f), new Dimension("1.0%w"));
-        assertEquals(new Dimension(DimensionType.PIXEL, 1.0f), new Dimension("1.0px"));
+        Assert.assertEquals(new Dimension(DimensionType.PERCENT, 1.0f), new Dimension("1.0%"));
+        Assert.assertEquals(new Dimension(DimensionType.PERCENT_HEIGHT, 1.0f), new Dimension("1.0%h"));
+        Assert.assertEquals(new Dimension(DimensionType.PERCENT_WIDTH, 1.0f), new Dimension("1.0%w"));
+        Assert.assertEquals(new Dimension(DimensionType.PIXEL, 1.0f), new Dimension("1.0px"));
 
-        Dimension dimension = new Dimension(DimensionType.PIXEL, 1.0f);
+        final Dimension dimension = new Dimension(DimensionType.PIXEL, 1.0f);
 
-        assertEquals(1.0f, dimension.getSize(), 0.001f);
-        assertEquals(DimensionType.PIXEL, dimension.getType());
+        Assert.assertEquals(1.0f, dimension.getSize(), 0.001f);
+        Assert.assertEquals(DimensionType.PIXEL, dimension.getType());
     }
 }

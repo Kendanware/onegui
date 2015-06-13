@@ -3,7 +3,7 @@
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- * 
+ *
  * 1. Redistributions of source code must retain the above copyright notice, this
  *    list of conditions and the following disclaimer.
  *
@@ -14,7 +14,7 @@
  * 3. Neither the name of onegui, Kendanware nor the names of its
  *    contributors may be used to endorse or promote products derived from
  *    this software without specific prior written permission.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
@@ -33,10 +33,10 @@ import com.kendanware.onegui.core.Dimension;
 
 /**
  * Immutable object that is containing style information for components
- * 
+ *
  * @author Daniel Johansson, Kendanware
  * @author Kenny Colliander Nordin, Kendanware
- * 
+ *
  * @since 0.0.1
  */
 public final class Style {
@@ -60,7 +60,7 @@ public final class Style {
     private final Dimension marginTop;
 
     /**
-     * 
+     *
      * @param width
      *            the width
      * @param height
@@ -80,9 +80,9 @@ public final class Style {
      * @param marginBottom
      * @param marginTop
      */
-    public Style(Dimension width, Dimension height, Color color, String backgroundImage, Color backgroundColor, Dimension paddingLeft,
-            Dimension paddingRight, Dimension paddingBottom, Dimension paddingTop, Dimension marginLeft, Dimension marginRight,
-            Dimension marginBottom, Dimension marginTop) {
+    public Style(final Dimension width, final Dimension height, final Color color, final String backgroundImage, final Color backgroundColor,
+            final Dimension paddingLeft, final Dimension paddingRight, final Dimension paddingBottom, final Dimension paddingTop,
+            final Dimension marginLeft, final Dimension marginRight, final Dimension marginBottom, final Dimension marginTop) {
         super();
         this.width = width;
         this.height = height;
@@ -103,157 +103,186 @@ public final class Style {
     public int hashCode() {
         final int prime = 31;
         int result = 1;
-        result = prime * result + ((backgroundColor == null) ? 0 : backgroundColor.hashCode());
-        result = prime * result + ((backgroundImage == null) ? 0 : backgroundImage.hashCode());
-        result = prime * result + ((color == null) ? 0 : color.hashCode());
-        result = prime * result + ((height == null) ? 0 : height.hashCode());
-        result = prime * result + ((marginBottom == null) ? 0 : marginBottom.hashCode());
-        result = prime * result + ((marginLeft == null) ? 0 : marginLeft.hashCode());
-        result = prime * result + ((marginRight == null) ? 0 : marginRight.hashCode());
-        result = prime * result + ((marginTop == null) ? 0 : marginTop.hashCode());
-        result = prime * result + ((paddingBottom == null) ? 0 : paddingBottom.hashCode());
-        result = prime * result + ((paddingLeft == null) ? 0 : paddingLeft.hashCode());
-        result = prime * result + ((paddingRight == null) ? 0 : paddingRight.hashCode());
-        result = prime * result + ((paddingTop == null) ? 0 : paddingTop.hashCode());
-        result = prime * result + ((width == null) ? 0 : width.hashCode());
+        result = (prime * result) + ((this.backgroundColor == null) ? 0 : this.backgroundColor.hashCode());
+        result = (prime * result) + ((this.backgroundImage == null) ? 0 : this.backgroundImage.hashCode());
+        result = (prime * result) + ((this.color == null) ? 0 : this.color.hashCode());
+        result = (prime * result) + ((this.height == null) ? 0 : this.height.hashCode());
+        result = (prime * result) + ((this.marginBottom == null) ? 0 : this.marginBottom.hashCode());
+        result = (prime * result) + ((this.marginLeft == null) ? 0 : this.marginLeft.hashCode());
+        result = (prime * result) + ((this.marginRight == null) ? 0 : this.marginRight.hashCode());
+        result = (prime * result) + ((this.marginTop == null) ? 0 : this.marginTop.hashCode());
+        result = (prime * result) + ((this.paddingBottom == null) ? 0 : this.paddingBottom.hashCode());
+        result = (prime * result) + ((this.paddingLeft == null) ? 0 : this.paddingLeft.hashCode());
+        result = (prime * result) + ((this.paddingRight == null) ? 0 : this.paddingRight.hashCode());
+        result = (prime * result) + ((this.paddingTop == null) ? 0 : this.paddingTop.hashCode());
+        result = (prime * result) + ((this.width == null) ? 0 : this.width.hashCode());
         return result;
     }
 
     @Override
-    public boolean equals(Object obj) {
-        if (this == obj)
+    public boolean equals(final Object obj) {
+        if (this == obj) {
             return true;
-        if (obj == null)
+        }
+        if (obj == null) {
             return false;
-        if (getClass() != obj.getClass())
+        }
+        if (this.getClass() != obj.getClass()) {
             return false;
-        Style other = (Style) obj;
-        if (backgroundColor == null) {
-            if (other.backgroundColor != null)
+        }
+        final Style other = (Style) obj;
+        if (this.backgroundColor == null) {
+            if (other.backgroundColor != null) {
                 return false;
-        } else if (!backgroundColor.equals(other.backgroundColor))
+            }
+        } else if (!this.backgroundColor.equals(other.backgroundColor)) {
             return false;
-        if (backgroundImage == null) {
-            if (other.backgroundImage != null)
+        }
+        if (this.backgroundImage == null) {
+            if (other.backgroundImage != null) {
                 return false;
-        } else if (!backgroundImage.equals(other.backgroundImage))
+            }
+        } else if (!this.backgroundImage.equals(other.backgroundImage)) {
             return false;
-        if (color == null) {
-            if (other.color != null)
+        }
+        if (this.color == null) {
+            if (other.color != null) {
                 return false;
-        } else if (!color.equals(other.color))
+            }
+        } else if (!this.color.equals(other.color)) {
             return false;
-        if (height == null) {
-            if (other.height != null)
+        }
+        if (this.height == null) {
+            if (other.height != null) {
                 return false;
-        } else if (!height.equals(other.height))
+            }
+        } else if (!this.height.equals(other.height)) {
             return false;
-        if (marginBottom == null) {
-            if (other.marginBottom != null)
+        }
+        if (this.marginBottom == null) {
+            if (other.marginBottom != null) {
                 return false;
-        } else if (!marginBottom.equals(other.marginBottom))
+            }
+        } else if (!this.marginBottom.equals(other.marginBottom)) {
             return false;
-        if (marginLeft == null) {
-            if (other.marginLeft != null)
+        }
+        if (this.marginLeft == null) {
+            if (other.marginLeft != null) {
                 return false;
-        } else if (!marginLeft.equals(other.marginLeft))
+            }
+        } else if (!this.marginLeft.equals(other.marginLeft)) {
             return false;
-        if (marginRight == null) {
-            if (other.marginRight != null)
+        }
+        if (this.marginRight == null) {
+            if (other.marginRight != null) {
                 return false;
-        } else if (!marginRight.equals(other.marginRight))
+            }
+        } else if (!this.marginRight.equals(other.marginRight)) {
             return false;
-        if (marginTop == null) {
-            if (other.marginTop != null)
+        }
+        if (this.marginTop == null) {
+            if (other.marginTop != null) {
                 return false;
-        } else if (!marginTop.equals(other.marginTop))
+            }
+        } else if (!this.marginTop.equals(other.marginTop)) {
             return false;
-        if (paddingBottom == null) {
-            if (other.paddingBottom != null)
+        }
+        if (this.paddingBottom == null) {
+            if (other.paddingBottom != null) {
                 return false;
-        } else if (!paddingBottom.equals(other.paddingBottom))
+            }
+        } else if (!this.paddingBottom.equals(other.paddingBottom)) {
             return false;
-        if (paddingLeft == null) {
-            if (other.paddingLeft != null)
+        }
+        if (this.paddingLeft == null) {
+            if (other.paddingLeft != null) {
                 return false;
-        } else if (!paddingLeft.equals(other.paddingLeft))
+            }
+        } else if (!this.paddingLeft.equals(other.paddingLeft)) {
             return false;
-        if (paddingRight == null) {
-            if (other.paddingRight != null)
+        }
+        if (this.paddingRight == null) {
+            if (other.paddingRight != null) {
                 return false;
-        } else if (!paddingRight.equals(other.paddingRight))
+            }
+        } else if (!this.paddingRight.equals(other.paddingRight)) {
             return false;
-        if (paddingTop == null) {
-            if (other.paddingTop != null)
+        }
+        if (this.paddingTop == null) {
+            if (other.paddingTop != null) {
                 return false;
-        } else if (!paddingTop.equals(other.paddingTop))
+            }
+        } else if (!this.paddingTop.equals(other.paddingTop)) {
             return false;
-        if (width == null) {
-            if (other.width != null)
+        }
+        if (this.width == null) {
+            if (other.width != null) {
                 return false;
-        } else if (!width.equals(other.width))
+            }
+        } else if (!this.width.equals(other.width)) {
             return false;
+        }
         return true;
     }
 
     public String getBackgroundImage() {
-        return backgroundImage;
+        return this.backgroundImage;
     }
 
     public Color getBackgroundColor() {
-        return backgroundColor;
+        return this.backgroundColor;
     }
 
     public Color getColor() {
-        return color;
+        return this.color;
     }
 
     public Dimension getPaddingLeft() {
-        return paddingLeft;
+        return this.paddingLeft;
     }
 
     public Dimension getPaddingRight() {
-        return paddingRight;
+        return this.paddingRight;
     }
 
     public Dimension getPaddingBottom() {
-        return paddingBottom;
+        return this.paddingBottom;
     }
 
     public Dimension getPaddingTop() {
-        return paddingTop;
+        return this.paddingTop;
     }
 
     public Dimension getMarginLeft() {
-        return marginLeft;
+        return this.marginLeft;
     }
 
     public Dimension getMarginRight() {
-        return marginRight;
+        return this.marginRight;
     }
 
     public Dimension getMarginBottom() {
-        return marginBottom;
+        return this.marginBottom;
     }
 
     public Dimension getMarginTop() {
-        return marginTop;
+        return this.marginTop;
     }
 
     public Dimension getWidth() {
-        return width;
+        return this.width;
     }
 
     public Dimension getHeight() {
-        return height;
+        return this.height;
     }
 
     @Override
     public String toString() {
-        return "Style [width=" + width + ", height=" + height + ", backgroundImage=" + backgroundImage + ", backgroundColor=" + backgroundColor
-                + ", color=" + color + ", paddingLeft=" + paddingLeft + ", paddingRight=" + paddingRight + ", paddingBottom=" + paddingBottom
-                + ", paddingTop=" + paddingTop + ", marginLeft=" + marginLeft + ", marginRight=" + marginRight + ", marginBottom=" + marginBottom
-                + ", marginTop=" + marginTop + "]";
+        return "Style [width=" + this.width + ", height=" + this.height + ", backgroundImage=" + this.backgroundImage + ", backgroundColor="
+                + this.backgroundColor + ", color=" + this.color + ", paddingLeft=" + this.paddingLeft + ", paddingRight=" + this.paddingRight
+                + ", paddingBottom=" + this.paddingBottom + ", paddingTop=" + this.paddingTop + ", marginLeft=" + this.marginLeft + ", marginRight="
+                + this.marginRight + ", marginBottom=" + this.marginBottom + ", marginTop=" + this.marginTop + "]";
     }
 
 }

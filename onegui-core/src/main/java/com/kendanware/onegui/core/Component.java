@@ -3,7 +3,7 @@
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- * 
+ *
  * 1. Redistributions of source code must retain the above copyright notice, this
  *    list of conditions and the following disclaimer.
  *
@@ -14,7 +14,7 @@
  * 3. Neither the name of onegui, Kendanware nor the names of its
  *    contributors may be used to endorse or promote products derived from
  *    this software without specific prior written permission.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
@@ -27,8 +27,6 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 package com.kendanware.onegui.core;
-
-import static com.kendanware.onegui.core.Validation.checkId;
 
 import java.util.Collections;
 import java.util.Set;
@@ -44,15 +42,15 @@ import com.kendanware.onegui.core.style.Style;
 
 /**
  * The Component is the base object that all other controls inherit from.
- * 
+ *
  * @author Daniel Johansson, Kendanware
  * @author Kenny Colliander Nordin, Kendanware
- * 
+ *
  * @since 0.0.1
  */
 public class Component {
 
-    private String id;
+    private final String id;
 
     private Style style;
 
@@ -66,7 +64,7 @@ public class Component {
 
     /**
      * Constructor
-     * 
+     *
      * @param id
      *            the id
      */
@@ -77,18 +75,18 @@ public class Component {
 
     /**
      * Constructor
-     * 
+     *
      * @param parent
      *            the parent
      * @param id
      *            the id
-     * 
+     *
      * @throws IllegalArgumentException
      *             if the id is invalid or not unique or if parent container is null
      */
     public Component(final Container parent, final String id) {
         this.checkParentComponent(parent);
-        checkId(parent, id);
+        Validation.checkId(parent, id);
 
         this.parent = parent;
         this.id = id;
@@ -96,17 +94,17 @@ public class Component {
         this.registerInParent(parent);
     }
 
-    protected void checkParentComponent(Container parent) {
+    protected void checkParentComponent(final Container parent) {
         if (parent == null) {
             throw new IllegalArgumentException("Parent Container is null");
         }
     }
 
     public Container getParent() {
-        return parent;
+        return this.parent;
     }
 
-    protected void registerInParent(Container parent) {
+    protected void registerInParent(final Container parent) {
         parent.addComponent(this);
     }
 
@@ -114,7 +112,7 @@ public class Component {
      * @return the id
      */
     public String getId() {
-        return id;
+        return this.id;
     }
 
     /**
@@ -176,17 +174,17 @@ public class Component {
 
     /**
      * Add event listener to the control
-     * 
+     *
      * @param event
      *            the event listener to add
      */
     public void addClickedEventListener(final ClickedEvent event) {
-        this.clickedEventListeners.addListener((ClickedEvent) event);
+        this.clickedEventListeners.addListener(event);
     }
 
     /**
      * Add event listener to the control
-     * 
+     *
      * @param event
      *            the event listener to add
      */
@@ -196,7 +194,7 @@ public class Component {
 
     /**
      * Add event listener to the control
-     * 
+     *
      * @param event
      *            the event listener to add
      */
@@ -206,7 +204,7 @@ public class Component {
 
     /**
      * Remove event listener from the control
-     * 
+     *
      * @param event
      *            the event listener to remove
      */
@@ -220,7 +218,7 @@ public class Component {
 
     /**
      * Remove event listener from the control
-     * 
+     *
      * @param event
      *            the event listener to remove
      */
@@ -234,7 +232,7 @@ public class Component {
 
     /**
      * Remove event listener from the control
-     * 
+     *
      * @param event
      *            the event listener to remove
      */

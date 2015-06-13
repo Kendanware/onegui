@@ -3,7 +3,7 @@
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- * 
+ *
  * 1. Redistributions of source code must retain the above copyright notice, this
  *    list of conditions and the following disclaimer.
  *
@@ -14,7 +14,7 @@
  * 3. Neither the name of onegui, Kendanware nor the names of its
  *    contributors may be used to endorse or promote products derived from
  *    this software without specific prior written permission.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
@@ -30,10 +30,10 @@ package com.kendanware.onegui.core;
 
 /**
  * Describes all available dimesion types.
- * 
+ *
  * @author Daniel Johansson, Kendanware
  * @author Kenny Colliander Nordin, Kendanware
- * 
+ *
  * @since 0.0.1
  */
 public enum DimensionType {
@@ -66,12 +66,12 @@ public enum DimensionType {
      * @return the suffix related to the dimension
      */
     public String getSuffix() {
-        return suffix;
+        return this.suffix;
     }
 
     /**
      * Detect a dimension type depending on suffix
-     * 
+     *
      * @param stringValue
      *            the string to detect
      * @return the type
@@ -84,7 +84,7 @@ public enum DimensionType {
             throw new IllegalArgumentException("Invalid dimension: null");
         }
 
-        for (DimensionType type : DimensionType.values()) {
+        for (final DimensionType type : DimensionType.values()) {
             if (stringValue.endsWith(type.getSuffix())) {
                 return type;
             }
@@ -95,7 +95,7 @@ public enum DimensionType {
 
     /**
      * Parse a size from a string value.
-     * 
+     *
      * @param stringValue
      *            the string value
      * @return the size
@@ -108,7 +108,7 @@ public enum DimensionType {
             throw new IllegalArgumentException("Invalid dimension: null");
         }
 
-        if (!stringValue.endsWith(getSuffix())) {
+        if (!stringValue.endsWith(this.getSuffix())) {
             throw new IllegalArgumentException("Invalid dimension; suffix doesn't match: " + stringValue);
         }
 
@@ -120,8 +120,9 @@ public enum DimensionType {
 
         final float value = Float.valueOf(stringValue.substring(0, stringValueLength - this.suffixLength));
 
-        if (value < this.minValue || value > this.maxValue) {
-            throw new IllegalArgumentException("Invalid dimension; must be a value between " + minValue + " and " + maxValue + ": " + stringValue);
+        if ((value < this.minValue) || (value > this.maxValue)) {
+            throw new IllegalArgumentException("Invalid dimension; must be a value between " + this.minValue + " and " + this.maxValue + ": "
+                    + stringValue);
         }
 
         return value;
