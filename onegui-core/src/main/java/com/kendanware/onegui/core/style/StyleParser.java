@@ -30,6 +30,7 @@ package com.kendanware.onegui.core.style;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -56,43 +57,20 @@ import com.kendanware.onegui.core.Dimension;
  */
 public class StyleParser {
 
-    private static final String HEIGHT = "height";
-
-    private static final String WIDTH = "width";
-
-    private static final String MARGIN_TOP = "marginTop";
-
-    private static final String MARGIN_BOTTOM = "marginBottom";
-
-    private static final String MARGIN_RIGHT = "marginRight";
-
-    private static final String MARGIN_LEFT = "marginLeft";
-
-    private static final String PADDING_TOP = "paddingTop";
-
-    private static final String PADDING_BOTTOM = "paddingBottom";
-
-    private static final String PADDING_RIGHT = "paddingRight";
-
-    private static final String PADDING_LEFT = "paddingLeft";
-
-    private static final String BACKGROUND_IMAGE = "backgroundImage";
-
-    private static final String BACKGROUND_COLOR = "backgroundColor";
-
-    private static final String COLOR = "color";
-
     private static final Logger LOG = LoggerFactory.getLogger(StyleParser.class);
 
     private static final Dimension DIMESION_100_PERCENT = new Dimension("100%");
 
     private static final Dimension DIMENSION_0_PIXEL = new Dimension("0.0px");
 
-    private static final Set<String> AVAILABLE_PROPERTIES = Collections.unmodifiableSet(new HashSet<>(Arrays.asList(StyleParser.HEIGHT,
-            StyleParser.WIDTH, StyleParser.MARGIN_BOTTOM, StyleParser.MARGIN_LEFT, StyleParser.MARGIN_RIGHT, StyleParser.MARGIN_TOP,
-            StyleParser.PADDING_BOTTOM, StyleParser.PADDING_LEFT, StyleParser.PADDING_RIGHT, StyleParser.PADDING_TOP, StyleParser.BACKGROUND_IMAGE,
-            StyleParser.BACKGROUND_COLOR, StyleParser.COLOR)));
+    private static final Set<String> AVAILABLE_PROPERTIES = Collections.unmodifiableSet(new HashSet<>(Arrays.asList(StyleProperty.HEIGHT,
+            StyleProperty.WIDTH, StyleProperty.MARGIN_BOTTOM, StyleProperty.MARGIN_LEFT, StyleProperty.MARGIN_RIGHT, StyleProperty.MARGIN_TOP,
+            StyleProperty.PADDING_BOTTOM, StyleProperty.PADDING_LEFT, StyleProperty.PADDING_RIGHT, StyleProperty.PADDING_TOP,
+            StyleProperty.BACKGROUND_IMAGE, StyleProperty.BACKGROUND_COLOR, StyleProperty.COLOR)));
 
+    /**
+     * Different parsing states
+     */
     protected enum State {
         STYLE_NAME, PROPERTY, VALUE, COMMENT
     }
@@ -101,13 +79,25 @@ public class StyleParser {
      * Parse a onegui style file (.ogs)
      *
      * @param inputStream
-     *            the file
+     *            the stream to parse using UTF-8 encoding, note that the stream needs to be closed.
      * @return a map with all compiled styles
      * @throws IOException
      */
     public Map<String, Style> parseStyle(final InputStream inputStream) throws IOException {
+        return this.parseStyle(new InputStreamReader(inputStream, "UTF-8"));
+    }
 
-        if (inputStream == null) {
+    /**
+     * Parse a onegui style file (.ogs)
+     *
+     * @param inputStreamReader
+     *            the stream to parse, note that the stream needs to be closed.
+     * @return a map with all compiled styles
+     * @throws IOException
+     */
+    public Map<String, Style> parseStyle(final InputStreamReader inputStreamReader) throws IOException {
+
+        if (inputStreamReader == null) {
             throw new IllegalArgumentException("Parameter inputStream is null");
         }
 
@@ -127,7 +117,7 @@ public class StyleParser {
         boolean lastCharWasSlash = false;
         State lastState = null;
 
-        while ((i = inputStream.read()) != -1) {
+        while ((i = inputStreamReader.read()) != -1) {
             columnNumber++;
 
             if (i == '/') {
@@ -275,19 +265,19 @@ public class StyleParser {
 
     protected Style getStyle(final Map<String, String> properties) {
 
-        return new Style(this.getDimension(properties, StyleParser.WIDTH, StyleParser.DIMESION_100_PERCENT), // width
-                this.getDimension(properties, StyleParser.HEIGHT, StyleParser.DIMESION_100_PERCENT), // height
-                this.getColor(properties, StyleParser.COLOR, Color.WHITE), // color
+        return new Style(this.getDimension(properties, StyleProperty.WIDTH, StyleParser.DIMESION_100_PERCENT), // width
+                this.getDimension(properties, StyleProperty.HEIGHT, StyleParser.DIMESION_100_PERCENT), // height
+                this.getColor(properties, StyleProperty.COLOR, Color.WHITE), // color
                 this.getBackgroundImage(properties), // background image
-                this.getColor(properties, StyleParser.BACKGROUND_COLOR, Color.TRANSPARENT), // background color
-                this.getDimension(properties, StyleParser.PADDING_LEFT, StyleParser.DIMENSION_0_PIXEL), // padding left
-                this.getDimension(properties, StyleParser.PADDING_RIGHT, StyleParser.DIMENSION_0_PIXEL), // padding right
-                this.getDimension(properties, StyleParser.PADDING_BOTTOM, StyleParser.DIMENSION_0_PIXEL), // padding bottom
-                this.getDimension(properties, StyleParser.PADDING_TOP, StyleParser.DIMENSION_0_PIXEL), // padding top
-                this.getDimension(properties, StyleParser.MARGIN_LEFT, StyleParser.DIMENSION_0_PIXEL), // margin left
-                this.getDimension(properties, StyleParser.MARGIN_RIGHT, StyleParser.DIMENSION_0_PIXEL), // margin right
-                this.getDimension(properties, StyleParser.MARGIN_BOTTOM, StyleParser.DIMENSION_0_PIXEL), // margin bottom
-                this.getDimension(properties, StyleParser.MARGIN_TOP, StyleParser.DIMENSION_0_PIXEL)); // margin top
+                this.getColor(properties, StyleProperty.BACKGROUND_COLOR, Color.TRANSPARENT), // background color
+                this.getDimension(properties, StyleProperty.PADDING_LEFT, StyleParser.DIMENSION_0_PIXEL), // padding left
+                this.getDimension(properties, StyleProperty.PADDING_RIGHT, StyleParser.DIMENSION_0_PIXEL), // padding right
+                this.getDimension(properties, StyleProperty.PADDING_BOTTOM, StyleParser.DIMENSION_0_PIXEL), // padding bottom
+                this.getDimension(properties, StyleProperty.PADDING_TOP, StyleParser.DIMENSION_0_PIXEL), // padding top
+                this.getDimension(properties, StyleProperty.MARGIN_LEFT, StyleParser.DIMENSION_0_PIXEL), // margin left
+                this.getDimension(properties, StyleProperty.MARGIN_RIGHT, StyleParser.DIMENSION_0_PIXEL), // margin right
+                this.getDimension(properties, StyleProperty.MARGIN_BOTTOM, StyleParser.DIMENSION_0_PIXEL), // margin bottom
+                this.getDimension(properties, StyleProperty.MARGIN_TOP, StyleParser.DIMENSION_0_PIXEL)); // margin top
     }
 
     protected Color getColor(final Map<String, String> properties, final String property, final Color defaultValue) {
@@ -310,7 +300,7 @@ public class StyleParser {
     }
 
     protected String getBackgroundImage(final Map<String, String> properties) {
-        final String value = properties.get(StyleParser.BACKGROUND_IMAGE);
+        final String value = properties.get(StyleProperty.BACKGROUND_IMAGE);
 
         if ((value == null) || value.isEmpty()) {
             return null;
