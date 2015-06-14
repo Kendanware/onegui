@@ -210,4 +210,26 @@ public class ColorTest {
         Assert.assertSame(color, colorSimilar);
     }
 
+    @Test
+    public void testStaticColors() {
+
+        Assert.assertEquals(Color.AQUA, new Color("aqua"));
+        Assert.assertEquals(Color.BLACK, new Color("black"));
+        Assert.assertEquals(Color.BLUE, new Color("blue"));
+        Assert.assertEquals(Color.FUCHSIA, new Color("fuchsia"));
+        Assert.assertEquals(Color.GRAY, new Color("gray"));
+        Assert.assertEquals(Color.GREEN, new Color("green"));
+        Assert.assertEquals(Color.LIME, new Color("lime"));
+        Assert.assertEquals(Color.MAROON, new Color("maroon"));
+        Assert.assertEquals(Color.NAVY, new Color("navy"));
+        Assert.assertEquals(Color.OLIVE, new Color("olive"));
+        Assert.assertEquals(Color.PURPLE, new Color("purple"));
+        Assert.assertEquals(Color.RED, new Color("red"));
+        Assert.assertEquals(Color.SILVER, new Color("silver"));
+        Assert.assertEquals(Color.TEAL, new Color("teal"));
+        Assert.assertEquals(Color.TRANSPARENT, new Color("transparent"));
+        Assert.assertEquals(Color.WHITE, new Color("white"));
+        Assert.assertEquals(Color.YELLOW, new Color("yellow"));
+    }
+
 }

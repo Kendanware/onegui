@@ -29,6 +29,10 @@
 package com.kendanware.onegui.core;
 
 import java.io.Serializable;
+import java.lang.reflect.Field;
+import java.util.Collections;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * Immutable color object containing values of RGBA as <code>float</code>s. Valid value ranges are between 0.0f and 1.0f.
@@ -102,6 +106,26 @@ public final class Color implements Serializable, Cloneable {
     private final float blue;
     private final float alpha;
 
+    private static final Map<String, Color> COLORS;
+
+    static {
+        // Assign all static colors
+        final Map<String, Color> colors = new ConcurrentHashMap<>();
+        final Field[] fields = Color.class.getDeclaredFields();
+
+        for (Field field : fields) {
+            if (field.getType() == Color.class) {
+                try {
+                    colors.put(field.getName().toLowerCase(), (Color) field.get(null));
+                } catch (IllegalArgumentException | IllegalAccessException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        }
+
+        COLORS = Collections.unmodifiableMap(colors);
+    }
+
     /**
      * Constructs a color
      */
@@ -170,6 +194,19 @@ public final class Color implements Serializable, Cloneable {
             this.alpha = (parsed & 255) / 255f;
 
         } else {
+
+            if (color != null) {
+                final Color definedColor = COLORS.get(color);
+
+                if (definedColor != null) {
+                    this.red = definedColor.red;
+                    this.green = definedColor.green;
+                    this.blue = definedColor.blue;
+                    this.alpha = definedColor.alpha;
+                    return;
+                }
+            }
+
             throw new IllegalArgumentException("Invalid color format: " + color);
         }
     }
