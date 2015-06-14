@@ -61,8 +61,6 @@ public class StyleParser {
 
     private static final Dimension DIMESION_100_PERCENT = new Dimension("100%");
 
-    private static final Dimension DIMENSION_0_PIXEL = new Dimension("0.0px");
-
     private static final Set<String> AVAILABLE_PROPERTIES = Collections.unmodifiableSet(new HashSet<>(Arrays.asList(StyleProperty.HEIGHT,
             StyleProperty.WIDTH, StyleProperty.MARGIN_BOTTOM, StyleProperty.MARGIN_LEFT, StyleProperty.MARGIN_RIGHT, StyleProperty.MARGIN_TOP,
             StyleProperty.PADDING_BOTTOM, StyleProperty.PADDING_LEFT, StyleProperty.PADDING_RIGHT, StyleProperty.PADDING_TOP,
@@ -270,14 +268,14 @@ public class StyleParser {
                 this.getColor(properties, StyleProperty.COLOR, Color.WHITE), // color
                 this.getBackgroundImage(properties), // background image
                 this.getColor(properties, StyleProperty.BACKGROUND_COLOR, Color.TRANSPARENT), // background color
-                this.getDimension(properties, StyleProperty.PADDING_LEFT, StyleParser.DIMENSION_0_PIXEL), // padding left
-                this.getDimension(properties, StyleProperty.PADDING_RIGHT, StyleParser.DIMENSION_0_PIXEL), // padding right
-                this.getDimension(properties, StyleProperty.PADDING_BOTTOM, StyleParser.DIMENSION_0_PIXEL), // padding bottom
-                this.getDimension(properties, StyleProperty.PADDING_TOP, StyleParser.DIMENSION_0_PIXEL), // padding top
-                this.getDimension(properties, StyleProperty.MARGIN_LEFT, StyleParser.DIMENSION_0_PIXEL), // margin left
-                this.getDimension(properties, StyleProperty.MARGIN_RIGHT, StyleParser.DIMENSION_0_PIXEL), // margin right
-                this.getDimension(properties, StyleProperty.MARGIN_BOTTOM, StyleParser.DIMENSION_0_PIXEL), // margin bottom
-                this.getDimension(properties, StyleProperty.MARGIN_TOP, StyleParser.DIMENSION_0_PIXEL)); // margin top
+                this.getDimension(properties, StyleProperty.PADDING_LEFT, Dimension.ZERO), // padding left
+                this.getDimension(properties, StyleProperty.PADDING_RIGHT, Dimension.ZERO), // padding right
+                this.getDimension(properties, StyleProperty.PADDING_BOTTOM, Dimension.ZERO), // padding bottom
+                this.getDimension(properties, StyleProperty.PADDING_TOP, Dimension.ZERO), // padding top
+                this.getDimension(properties, StyleProperty.MARGIN_LEFT, Dimension.ZERO), // margin left
+                this.getDimension(properties, StyleProperty.MARGIN_RIGHT, Dimension.ZERO), // margin right
+                this.getDimension(properties, StyleProperty.MARGIN_BOTTOM, Dimension.ZERO), // margin bottom
+                this.getDimension(properties, StyleProperty.MARGIN_TOP, Dimension.ZERO)); // margin top
     }
 
     protected Color getColor(final Map<String, String> properties, final String property, final Color defaultValue) {

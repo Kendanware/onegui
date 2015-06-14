@@ -38,6 +38,8 @@ package com.kendanware.onegui.core;
  */
 public final class Dimension {
 
+    public static final Dimension ZERO = new Dimension(DimensionType.PIXEL, 0);
+
     private final DimensionType type;
 
     private final float size;
