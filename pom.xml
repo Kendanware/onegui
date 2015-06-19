@@ -33,6 +33,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<slf4j.version>1.7.5</slf4j.version>
 		<log4j.version>2.1</log4j.version>
+		<jme3.version>3.0.10</jme3.version>
 	</properties>
 
 	<developers>
@@ -99,6 +100,23 @@
 				<artifactId>onegui-core</artifactId>
 				<version>${project.version}</version>
 			</dependency>
+
+			<!-- JME3 -->
+			<dependency>
+				<groupId>com.jme3</groupId>
+				<artifactId>jme3-core</artifactId>
+				<version>${jme3.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.jme3</groupId>
+				<artifactId>jme3-desktop</artifactId>
+				<version>${jme3.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.jme3</groupId>
+				<artifactId>jme3-lwjgl</artifactId>
+				<version>${jme3.version}</version>
+			</dependency>
 		</dependencies>
 	</dependencyManagement>
 	<modules>
@@ -118,6 +136,13 @@
 			<artifactId>slf4j-api</artifactId>
 		</dependency>
 	</dependencies>
+
+	<repositories>
+		<repository>
+			<id>jme3</id>
+			<url>http://updates.jmonkeyengine.org/maven/</url>
+		</repository>
+	</repositories>
 
 	<build>
 		<plugins>

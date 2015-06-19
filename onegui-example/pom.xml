@@ -50,5 +50,17 @@
 			<artifactId>slf4j-simple</artifactId>
 		</dependency>
 
+		<dependency>
+			<groupId>com.jme3</groupId>
+			<artifactId>jme3-core</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.jme3</groupId>
+			<artifactId>jme3-desktop</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.jme3</groupId>
+			<artifactId>jme3-lwjgl</artifactId>
+		</dependency>
 	</dependencies>
 </project>
