@@ -32,8 +32,11 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
 import com.kendanware.onegui.core.Component;
+import com.kendanware.onegui.core.control.Button;
+import com.kendanware.onegui.core.control.ButtonState;
 import com.kendanware.onegui.core.renderer.ComponentInfo;
 import com.kendanware.onegui.core.renderer.OneGuiRenderer;
+import com.kendanware.onegui.core.renderer.RenderingState;
 
 /**
  * Renderer for the <code>Button</code> component.
@@ -51,6 +54,45 @@ public class ButtonRenderer extends DefaultComponentRenderer {
             BufferedImage bufferedImage, Graphics2D graphics) {
 
         this.drawBackground(component, width, height, graphics);
+    }
+
+    @Override
+    public RenderingState getState(OneGuiRenderer oneGuiRenderer, Component component, ComponentInfo componentInfo) {
+        final Button button = (Button) component;
+        final ButtonState buttonState = button.getState();
+
+        return new ButtonRenderingState(buttonState);
+    }
+
+    private static class ButtonRenderingState implements RenderingState {
+        private final ButtonState buttonState;
+
+        public ButtonRenderingState(ButtonState buttonState) {
+            super();
+            this.buttonState = buttonState;
+        }
+
+        @Override
+        public int hashCode() {
+            final int prime = 31;
+            int result = 1;
+            result = prime * result + ((buttonState == null) ? 0 : buttonState.hashCode());
+            return result;
+        }
+
+        @Override
+        public boolean equals(Object obj) {
+            if (this == obj)
+                return true;
+            if (obj == null)
+                return false;
+            if (getClass() != obj.getClass())
+                return false;
+            ButtonRenderingState other = (ButtonRenderingState) obj;
+            if (buttonState != other.buttonState)
+                return false;
+            return true;
+        }
     }
 
 }

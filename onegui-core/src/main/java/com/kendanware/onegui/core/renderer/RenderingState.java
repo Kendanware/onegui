@@ -28,20 +28,6 @@
  */
 package com.kendanware.onegui.core.renderer;
 
-import java.awt.image.BufferedImage;
+public interface RenderingState {
 
-import com.kendanware.onegui.core.Component;
-
-/**
- * Interface for component renders
- *
- * @author Daniel Johansson, Kendanware
- * @author Kenny Colliander Nordin, Kendanware
- *
- * @since 0.0.1
- */
-public interface ComponentRenderer {
-    public BufferedImage render(OneGuiRenderer oneGuiRenderer, Component component, ComponentInfo componentInfo);
-
-    public RenderingState getState(OneGuiRenderer oneGuiRenderer, Component component, ComponentInfo componentInfo);
 }
