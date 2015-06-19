@@ -79,4 +79,22 @@ public class StyleProperty {
 
     /** Foreground color in container. Type: {@link Color} */
     public static final String COLOR = "color";
+
+    /** Font, specify resource path */
+    public static final String FONT = "font";
+
+    /** Font size */
+    public static final String FONT_SIZE = "fontSize";
+
+    /** Font style */
+    public static final String FONT_STYLE = "fontStyle";
+
+    /** Align */
+    public static final String ALIGN = "align";
+
+    /** Vertical align */
+    public static final String VERTICAL_ALIGN = "verticalAlign";
+
+    /** Child layout */
+    public static final String CHILD_LAYOUT = "childLayout";
 }

@@ -37,6 +37,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
@@ -44,8 +45,13 @@ import java.util.concurrent.ConcurrentHashMap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.kendanware.onegui.core.Align;
+import com.kendanware.onegui.core.ChildLayout;
 import com.kendanware.onegui.core.Color;
 import com.kendanware.onegui.core.Dimension;
+import com.kendanware.onegui.core.FontSize;
+import com.kendanware.onegui.core.FontStyle;
+import com.kendanware.onegui.core.VerticalAlign;
 
 /**
  * Parse onegui style files
@@ -64,7 +70,8 @@ public class StyleParser {
     private static final Set<String> AVAILABLE_PROPERTIES = Collections.unmodifiableSet(new HashSet<>(Arrays.asList(StyleProperty.HEIGHT,
             StyleProperty.WIDTH, StyleProperty.MARGIN_BOTTOM, StyleProperty.MARGIN_LEFT, StyleProperty.MARGIN_RIGHT, StyleProperty.MARGIN_TOP,
             StyleProperty.PADDING_BOTTOM, StyleProperty.PADDING_LEFT, StyleProperty.PADDING_RIGHT, StyleProperty.PADDING_TOP,
-            StyleProperty.BACKGROUND_IMAGE, StyleProperty.BACKGROUND_COLOR, StyleProperty.COLOR)));
+            StyleProperty.BACKGROUND_IMAGE, StyleProperty.BACKGROUND_COLOR, StyleProperty.COLOR, StyleProperty.FONT, StyleProperty.FONT_SIZE,
+            StyleProperty.FONT_STYLE, StyleProperty.ALIGN, StyleProperty.VERTICAL_ALIGN, StyleProperty.CHILD_LAYOUT)));
 
     /**
      * Different parsing states
@@ -275,7 +282,14 @@ public class StyleParser {
                 this.getDimension(properties, StyleProperty.MARGIN_LEFT, Dimension.ZERO), // margin left
                 this.getDimension(properties, StyleProperty.MARGIN_RIGHT, Dimension.ZERO), // margin right
                 this.getDimension(properties, StyleProperty.MARGIN_BOTTOM, Dimension.ZERO), // margin bottom
-                this.getDimension(properties, StyleProperty.MARGIN_TOP, Dimension.ZERO)); // margin top
+                this.getDimension(properties, StyleProperty.MARGIN_TOP, Dimension.ZERO), // margin top
+                this.getChildLayout(properties), // child layout
+                this.getAlign(properties), // align
+                this.getVerticalAlign(properties), // vertical align
+                this.getFont(properties), // font
+                this.getFontSize(properties), // font size
+                this.getFontStyle(properties) // font style
+        );
     }
 
     protected Color getColor(final Map<String, String> properties, final String property, final Color defaultValue) {
@@ -314,5 +328,70 @@ public class StyleParser {
             }
         }
         return null;
+    }
+
+    protected String getFont(final Map<String, String> properties) {
+        final String value = properties.get(StyleProperty.FONT);
+
+        if ((value == null) || value.isEmpty()) {
+            return null;
+        }
+
+        if (value.startsWith("\"") && value.endsWith("\"")) {
+            if (value.length() > 3) {
+                return value.substring(1, value.length() - 1);
+            }
+        }
+        return null;
+    }
+
+    protected FontSize getFontSize(final Map<String, String> properties) {
+
+        final String value = properties.get(StyleProperty.FONT_SIZE);
+        if ((value == null) || value.isEmpty()) {
+            return FontSize.DEFAULT_SIZE;
+        }
+
+        return new FontSize(value);
+    }
+
+    protected FontStyle getFontStyle(final Map<String, String> properties) {
+
+        final String value = properties.get(StyleProperty.FONT_STYLE);
+        if ((value == null) || value.isEmpty()) {
+            return FontStyle.NORMAL;
+        }
+
+        return FontStyle.valueOf(value.toUpperCase(Locale.US));
+    }
+
+    protected Align getAlign(final Map<String, String> properties) {
+
+        final String value = properties.get(StyleProperty.ALIGN);
+        if ((value == null) || value.isEmpty()) {
+            return Align.LEFT;
+        }
+
+        return Align.valueOf(value.toUpperCase(Locale.US));
+    }
+
+    protected VerticalAlign getVerticalAlign(final Map<String, String> properties) {
+
+        final String value = properties.get(StyleProperty.VERTICAL_ALIGN);
+        if ((value == null) || value.isEmpty()) {
+            return VerticalAlign.TOP;
+        }
+
+        return VerticalAlign.valueOf(value.toUpperCase(Locale.US));
+    }
+
+    protected ChildLayout getChildLayout(final Map<String, String> properties) {
+
+        final String value = properties.get(StyleProperty.CHILD_LAYOUT);
+        if ((value == null) || value.isEmpty()) {
+            return ChildLayout.RIGHT;
+        }
+
+        return ChildLayout.valueOf(value.toUpperCase(Locale.US));
     }
 }

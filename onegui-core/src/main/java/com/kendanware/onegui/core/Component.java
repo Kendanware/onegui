@@ -56,6 +56,8 @@ public class Component {
 
     private final Container parent;
 
+    private final OneGui oneGui;
+
     private final AtomicBoolean focus = new AtomicBoolean(false);
     private final AtomicBoolean hover = new AtomicBoolean(false);
     private final RegisteredEventListeners<ClickedEvent> clickedEventListeners = new RegisteredEventListeners<>();
@@ -68,7 +70,6 @@ public class Component {
      * @param id
      *            the id
      */
-
     public Component(final Container parent) {
         this(parent, UUID.randomUUID().toString());
     }
@@ -92,12 +93,68 @@ public class Component {
         this.id = id;
 
         this.registerInParent(parent);
+
+        if (parent != null) {
+            final Screen screen = this.getScreen(parent);
+
+            this.oneGui = screen.getOneGui();
+        } else {
+            throw new IllegalStateException("OneGui is null");
+        }
+    }
+
+    /**
+     * Constructor
+     *
+     * @param parent
+     *            the parent
+     * @param id
+     *            the id
+     *
+     * @throws IllegalArgumentException
+     *             if the id is invalid or not unique or if parent container is null
+     */
+    Component(final OneGui oneGui, final Container parent, final String id) {
+        this.checkParentComponent(parent);
+        Validation.checkId(parent, id);
+
+        this.parent = parent;
+        this.id = id;
+
+        this.registerInParent(parent);
+
+        if (oneGui != null) {
+            this.oneGui = oneGui;
+        } else if (parent != null) {
+            final Screen screen = this.getScreen(parent);
+
+            this.oneGui = screen.getOneGui();
+        } else {
+            throw new IllegalStateException("OneGui is null");
+        }
+    }
+
+    protected Screen getScreen(final Container parent) {
+
+        Component newParent = parent;
+        while (newParent.getParent() != null) {
+            newParent = newParent.getParent();
+        }
+
+        if (!(newParent instanceof Screen)) {
+            throw new IllegalArgumentException("No parent instance of Screen found");
+        }
+        return (Screen) newParent;
     }
 
     protected void checkParentComponent(final Container parent) {
         if (parent == null) {
             throw new IllegalArgumentException("Parent Container is null");
         }
+    }
+
+    public OneGui getOneGui() {
+        return oneGui;
     }
 
     public Container getParent() {
@@ -135,7 +192,9 @@ public class Component {
      */
     public void click() {
         for (final ClickedEvent listener : this.clickedEventListeners.getListeners()) {
-            listener.clicked(this.getId()); // TODO: run async
+            this.getOneGui().execute(() -> {
+                listener.clicked(this.getId());
+            });
         }
     }
 
@@ -154,7 +213,9 @@ public class Component {
         // Only fire event once per change
         if (this.focus.getAndSet(focus) != focus) {
             for (final FocusEvent listener : this.focusEventListeners.getListeners()) {
-                listener.focus(this.getId(), focus); // TODO: run async
+                this.getOneGui().execute(() -> {
+                    listener.focus(this.getId(), focus);
+                });
             }
         }
     }
@@ -167,7 +228,9 @@ public class Component {
         // Only fire event once per change
         if (this.hover.getAndSet(over) != over) {
             for (final HoverEvent listener : this.mouseHoverEventListeners.getListeners()) {
-                listener.hover(this.getId(), over); // TODO: run async
+                this.getOneGui().execute(() -> {
+                    listener.hover(this.getId(), over);
+                });
             }
         }
     }
@@ -266,4 +329,10 @@ public class Component {
             return Collections.unmodifiableSet(this.listeners);
         }
     }
+
+    @Override
+    public String toString() {
+        return "Component [id=" + id + ", class=" + this.getClass().getSimpleName() + "]";
+    }
+
 }

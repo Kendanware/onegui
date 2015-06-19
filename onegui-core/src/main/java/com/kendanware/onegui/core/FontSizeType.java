@@ -28,58 +28,59 @@
  */
 package com.kendanware.onegui.core;
 
-import java.util.List;
-
 /**
- * Contains various validation methods.
+ * Supported font size types.
  *
  * @author Daniel Johansson, Kendanware
  * @author Kenny Colliander Nordin, Kendanware
  *
  * @since 0.0.1
  */
-public class Validation {
+public enum FontSizeType {
+    /** Pixel */
+    PIXEL("px"),
 
-    /**
-     * Check that the id is unique. Scan the tree of components for the id
-     *
-     * @param id
-     *            the id to check
-     * @throws IllegalArgumentException
-     *             if the id is invalid
-     */
-    public static void checkId(final Component component, final String id) {
+    /** Relative, 1.0 equals 2% of screen height */
+    RELATIVE("");
 
-        if ((id == null) || id.trim().isEmpty()) {
-            throw new IllegalArgumentException("Invalid id: " + id);
-        }
-
-        if (component == null) {
-            return;
-        }
-
-        Component parent = component;
-        while (parent.getParent() != null) {
-            parent = parent.getParent();
-        }
-
-        Validation.checkIdTraverse(parent, id);
+    FontSizeType(final String suffix) {
+        this.suffix = suffix;
+        this.suffixLength = suffix.length();
     }
 
-    protected static void checkIdTraverse(final Component component, final String id) {
+    private final String suffix;
 
-        if (id.equals(component.getId())) {
-            throw new IllegalArgumentException("Invalid id; already in use: " + id);
+    private final int suffixLength;
+
+    public String getSuffix() {
+        return suffix;
+    }
+
+    static FontSizeType detectType(final String stringValue) {
+        if (stringValue == null) {
+            throw new IllegalArgumentException("Invalid FontSizeType: null");
         }
 
-        if (component instanceof Container) {
-            final Container container = (Container) component;
-
-            final List<Component> list = container.getChildren();
-
-            for (final Component child : list) {
-                Validation.checkIdTraverse(child, id);
-            }
+        if (stringValue.endsWith(PIXEL.getSuffix())) {
+            return PIXEL;
         }
+
+        return RELATIVE;
+    }
+
+    float parseValue(final String stringValue) {
+        if (!stringValue.endsWith(this.getSuffix())) {
+            throw new IllegalArgumentException("Invalid FontSizeType; suffix doesn't match: " + stringValue);
+        }
+
+        final int stringValueLength = stringValue.length();
+
+        if (stringValueLength < this.suffixLength) {
+            throw new IllegalArgumentException("Invalid FontSizeType: " + stringValue);
+        }
+
+        final float value = Float.valueOf(stringValue.substring(0, stringValueLength - this.suffixLength));
+
+        return value;
     }
 }

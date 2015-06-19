@@ -28,21 +28,22 @@
  */
 package com.kendanware.onegui.core;
 
-import org.junit.Assert;
+import static org.junit.Assert.assertEquals;
+
 import org.junit.Test;
 
 public class DimensionTest {
 
     @Test
     public void test() {
-        Assert.assertEquals(new Dimension(DimensionType.PERCENT, 1.0f), new Dimension("1.0%"));
-        Assert.assertEquals(new Dimension(DimensionType.PERCENT_HEIGHT, 1.0f), new Dimension("1.0%h"));
-        Assert.assertEquals(new Dimension(DimensionType.PERCENT_WIDTH, 1.0f), new Dimension("1.0%w"));
-        Assert.assertEquals(new Dimension(DimensionType.PIXEL, 1.0f), new Dimension("1.0px"));
+        assertEquals(new Dimension(DimensionType.PERCENT, 1.0f), new Dimension("1.0%"));
+        assertEquals(new Dimension(DimensionType.PERCENT_HEIGHT, 1.0f), new Dimension("1.0%h"));
+        assertEquals(new Dimension(DimensionType.PERCENT_WIDTH, 1.0f), new Dimension("1.0%w"));
+        assertEquals(new Dimension(DimensionType.PIXEL, 1.0f), new Dimension("1.0px"));
 
         final Dimension dimension = new Dimension(DimensionType.PIXEL, 1.0f);
 
-        Assert.assertEquals(1.0f, dimension.getSize(), 0.001f);
-        Assert.assertEquals(DimensionType.PIXEL, dimension.getType());
+        assertEquals(1.0f, dimension.getSize(), 0.001f);
+        assertEquals(DimensionType.PIXEL, dimension.getType());
     }
 }

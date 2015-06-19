@@ -47,5 +47,4 @@ public class Panel extends Container {
     public Panel(final Container parent, final String id) {
         super(parent, id);
     }
-
 }

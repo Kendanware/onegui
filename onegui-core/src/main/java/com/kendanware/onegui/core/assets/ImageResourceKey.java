@@ -26,45 +26,74 @@
  * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package com.kendanware.onegui.core;
-
-import java.util.UUID;
+package com.kendanware.onegui.core.assets;
 
 /**
- * Root screen from
+ * This class is used by <code>ImageResourceFactory</code> to index cached images.
  *
  * @author Daniel Johansson, Kendanware
  * @author Kenny Colliander Nordin, Kendanware
  *
  * @since 0.0.1
  */
+final class ImageResourceKey {
+    private final String resource;
 
-public class Screen extends Container {
+    private final int width;
 
-    private final OneGui oneGui;
+    private final int height;
 
-    public Screen(final OneGui oneGui) {
-        this(oneGui, UUID.randomUUID().toString());
-    }
-
-    public Screen(final OneGui oneGui, final String id) {
-        super(oneGui, null, id);
-        this.oneGui = oneGui;
+    /**
+     * Construct a image resource key
+     * 
+     * @param resource
+     *            the resource
+     * @param width
+     *            the width
+     * @param height
+     *            the height
+     */
+    public ImageResourceKey(final String resource, final int width, final int height) {
+        super();
+        this.resource = resource;
+        this.width = width;
+        this.height = height;
     }
 
     @Override
-    protected void checkParentComponent(final Container parent) {
-        // Disable parent validation
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + height;
+        result = prime * result + ((resource == null) ? 0 : resource.hashCode());
+        result = prime * result + width;
+        return result;
     }
 
     @Override
-    protected void registerInParent(final Container parent) {
-        // There is no parent
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        ImageResourceKey other = (ImageResourceKey) obj;
+        if (height != other.height)
+            return false;
+        if (resource == null) {
+            if (other.resource != null)
+                return false;
+        } else if (!resource.equals(other.resource))
+            return false;
+        if (width != other.width)
+            return false;
+        return true;
     }
 
     @Override
-    public OneGui getOneGui() {
-        return oneGui;
+    public String toString() {
+        return "ImageResourceKey [resource=" + resource + ", width=" + width + ", height=" + height + "]";
     }
 
 }

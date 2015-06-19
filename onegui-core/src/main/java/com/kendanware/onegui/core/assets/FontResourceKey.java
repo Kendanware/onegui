@@ -26,45 +26,76 @@
  * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package com.kendanware.onegui.core;
+package com.kendanware.onegui.core.assets;
 
-import java.util.UUID;
+import com.kendanware.onegui.core.FontStyle;
 
 /**
- * Root screen from
+ * This class is used by the <code>FontResourceFactory</code> for caching of created fonts.
  *
  * @author Daniel Johansson, Kendanware
  * @author Kenny Colliander Nordin, Kendanware
  *
  * @since 0.0.1
  */
+final class FontResourceKey {
+    private final String resource;
 
-public class Screen extends Container {
+    private final int size;
 
-    private final OneGui oneGui;
+    private final FontStyle style;
 
-    public Screen(final OneGui oneGui) {
-        this(oneGui, UUID.randomUUID().toString());
-    }
-
-    public Screen(final OneGui oneGui, final String id) {
-        super(oneGui, null, id);
-        this.oneGui = oneGui;
+    /**
+     * Constructor
+     * 
+     * @param resource
+     *            the resource name
+     * @param size
+     *            the size
+     * @param style
+     *            the style
+     */
+    public FontResourceKey(final String resource, final int size, final FontStyle style) {
+        super();
+        this.resource = resource;
+        this.size = size;
+        this.style = style;
     }
 
     @Override
-    protected void checkParentComponent(final Container parent) {
-        // Disable parent validation
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((resource == null) ? 0 : resource.hashCode());
+        result = prime * result + size;
+        result = prime * result + ((style == null) ? 0 : style.hashCode());
+        return result;
     }
 
     @Override
-    protected void registerInParent(final Container parent) {
-        // There is no parent
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        FontResourceKey other = (FontResourceKey) obj;
+        if (resource == null) {
+            if (other.resource != null)
+                return false;
+        } else if (!resource.equals(other.resource))
+            return false;
+        if (size != other.size)
+            return false;
+        if (style != other.style)
+            return false;
+        return true;
     }
 
     @Override
-    public OneGui getOneGui() {
-        return oneGui;
+    public String toString() {
+        return "FontResourceKey [resource=" + resource + ", size=" + size + ", style=" + style + "]";
     }
 
 }

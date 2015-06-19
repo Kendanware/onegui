@@ -106,6 +106,7 @@ public final class Color implements Serializable, Cloneable {
     private final float blue;
     private final float alpha;
 
+    /* Color names to actual defined colors mapping */
     private static final Map<String, Color> COLORS;
 
     static {

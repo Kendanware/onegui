@@ -28,58 +28,33 @@
  */
 package com.kendanware.onegui.core;
 
-import java.util.List;
+import java.awt.Font;
 
 /**
- * Contains various validation methods.
+ * Specify a specific font style, i.e. bold or italic.
  *
  * @author Daniel Johansson, Kendanware
  * @author Kenny Colliander Nordin, Kendanware
  *
  * @since 0.0.1
  */
-public class Validation {
+public enum FontStyle {
+    /** Normal or regular font */
 
-    /**
-     * Check that the id is unique. Scan the tree of components for the id
-     *
-     * @param id
-     *            the id to check
-     * @throws IllegalArgumentException
-     *             if the id is invalid
-     */
-    public static void checkId(final Component component, final String id) {
+    NORMAL(Font.PLAIN),
+    /** Bold */
+    BOLD(Font.BOLD),
 
-        if ((id == null) || id.trim().isEmpty()) {
-            throw new IllegalArgumentException("Invalid id: " + id);
-        }
+    /** Italic */
+    ITALIC(Font.ITALIC);
 
-        if (component == null) {
-            return;
-        }
+    final int style;
 
-        Component parent = component;
-        while (parent.getParent() != null) {
-            parent = parent.getParent();
-        }
-
-        Validation.checkIdTraverse(parent, id);
+    FontStyle(int style) {
+        this.style = style;
     }
 
-    protected static void checkIdTraverse(final Component component, final String id) {
-
-        if (id.equals(component.getId())) {
-            throw new IllegalArgumentException("Invalid id; already in use: " + id);
-        }
-
-        if (component instanceof Container) {
-            final Container container = (Container) component;
-
-            final List<Component> list = container.getChildren();
-
-            for (final Component child : list) {
-                Validation.checkIdTraverse(child, id);
-            }
-        }
+    public int getStyle() {
+        return style;
     }
 }

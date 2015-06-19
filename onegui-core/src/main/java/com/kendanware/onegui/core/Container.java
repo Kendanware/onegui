@@ -32,6 +32,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.UUID;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
@@ -50,11 +51,15 @@ public class Container extends Component {
     private final Lock componentsLock = new ReentrantLock();
 
     public Container(final Container parent) {
-        super(parent);
+        this(parent, UUID.randomUUID().toString());
     }
 
     public Container(final Container parent, final String id) {
-        super(parent, id);
+        this(parent.getOneGui(), parent, id);
+    }
+
+    Container(final OneGui oneGui, final Container parent, final String id) {
+        super(oneGui, parent, id);
     }
 
     public void addComponent(final Component component) {
@@ -97,5 +102,4 @@ public class Container extends Component {
     public List<Component> getChildren() {
         return this.components.get();
     }
-
 }

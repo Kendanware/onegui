@@ -26,60 +26,48 @@
  * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package com.kendanware.onegui.core;
+package com.kendanware.onegui.core.renderer.component;
 
+import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
 import java.util.List;
 
+import com.kendanware.onegui.core.Component;
+import com.kendanware.onegui.core.Container;
+import com.kendanware.onegui.core.renderer.ComponentInfo;
+import com.kendanware.onegui.core.renderer.ComponentRendererFactory;
+import com.kendanware.onegui.core.renderer.OneGuiRenderer;
+
 /**
- * Contains various validation methods.
+ * Renderer for the <code>Container</code> subclass component.
  *
  * @author Daniel Johansson, Kendanware
  * @author Kenny Colliander Nordin, Kendanware
  *
  * @since 0.0.1
  */
-public class Validation {
 
-    /**
-     * Check that the id is unique. Scan the tree of components for the id
-     *
-     * @param id
-     *            the id to check
-     * @throws IllegalArgumentException
-     *             if the id is invalid
-     */
-    public static void checkId(final Component component, final String id) {
+public class ContainerRenderer extends DefaultComponentRenderer {
 
-        if ((id == null) || id.trim().isEmpty()) {
-            throw new IllegalArgumentException("Invalid id: " + id);
-        }
+    @Override
+    protected void render(OneGuiRenderer oneGuiRenderer, Component component, ComponentInfo componentInfo, float width, float height,
+            BufferedImage bufferedImage, Graphics2D graphics) {
 
-        if (component == null) {
-            return;
-        }
-
-        Component parent = component;
-        while (parent.getParent() != null) {
-            parent = parent.getParent();
-        }
-
-        Validation.checkIdTraverse(parent, id);
+        this.drawBackground(component, width, height, graphics);
+        this.renderChildren(oneGuiRenderer, component, graphics);
     }
 
-    protected static void checkIdTraverse(final Component component, final String id) {
+    protected void renderChildren(OneGuiRenderer oneGuiRenderer, Component component, Graphics2D graphics) {
+        final List<Component> children = ((Container) component).getChildren();
 
-        if (id.equals(component.getId())) {
-            throw new IllegalArgumentException("Invalid id; already in use: " + id);
-        }
+        for (final Component child : children) {
 
-        if (component instanceof Container) {
-            final Container container = (Container) component;
+            final ComponentInfo childRendererInfo = oneGuiRenderer.getComponentInfos().get(child.getId());
+            final BufferedImage childImage = ComponentRendererFactory.getRenderHandler(child.getClass()).render(oneGuiRenderer, child,
+                    childRendererInfo);
 
-            final List<Component> list = container.getChildren();
-
-            for (final Component child : list) {
-                Validation.checkIdTraverse(child, id);
-            }
+            graphics.setColor(new java.awt.Color(0.0f, 0.0f, 0.0f, 0.1f));
+            graphics.drawImage(childImage, Math.round(childRendererInfo.getX()), Math.round(childRendererInfo.getY()), null);
         }
     }
 }

@@ -39,24 +39,21 @@ public class DimensionTypeTest {
         Assert.assertEquals(DimensionType.PERCENT_HEIGHT, DimensionType.detectType("1.0%h"));
         Assert.assertEquals(DimensionType.PERCENT_WIDTH, DimensionType.detectType("1.0%w"));
         Assert.assertEquals(DimensionType.PIXEL, DimensionType.detectType("1.0px"));
+    }
 
-        try {
-            DimensionType.detectType(null);
-            Assert.fail();
-        } catch (final IllegalArgumentException e) {
-        }
+    @Test(expected = IllegalArgumentException.class)
+    public void testDetectTypeNull() {
+        DimensionType.detectType(null);
+    }
 
-        try {
-            DimensionType.detectType("");
-            Assert.fail();
-        } catch (final IllegalArgumentException e) {
-        }
+    @Test(expected = IllegalArgumentException.class)
+    public void testDetectTypeEmpty() {
+        DimensionType.detectType("");
+    }
 
-        try {
-            DimensionType.detectType("1.0");
-            Assert.fail();
-        } catch (final IllegalArgumentException e) {
-        }
+    @Test(expected = IllegalArgumentException.class)
+    public void testDetectTypeNoSuffix() {
+        DimensionType.detectType("1.0");
     }
 
     @Test
@@ -97,6 +94,5 @@ public class DimensionTypeTest {
             } catch (final IllegalArgumentException e) {
             }
         }
-
     }
 }

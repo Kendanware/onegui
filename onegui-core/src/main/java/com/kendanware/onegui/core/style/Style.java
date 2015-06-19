@@ -28,8 +28,13 @@
  */
 package com.kendanware.onegui.core.style;
 
+import com.kendanware.onegui.core.Align;
+import com.kendanware.onegui.core.ChildLayout;
 import com.kendanware.onegui.core.Color;
 import com.kendanware.onegui.core.Dimension;
+import com.kendanware.onegui.core.FontSize;
+import com.kendanware.onegui.core.FontStyle;
+import com.kendanware.onegui.core.VerticalAlign;
 
 /**
  * Immutable object that is containing style information for components
@@ -59,6 +64,14 @@ public final class Style {
     private final Dimension marginBottom;
     private final Dimension marginTop;
 
+    private final String font;
+    private final FontSize fontSize;
+    private final FontStyle fontStyle;
+
+    private final Align align;
+    private final VerticalAlign verticalAlign;
+    private final ChildLayout childLayout;
+
     /**
      *
      * @param width
@@ -79,10 +92,15 @@ public final class Style {
      * @param marginRight
      * @param marginBottom
      * @param marginTop
+     * @param align
+     * @param font
+     * @param fontSize
+     * @param fontStyle
      */
-    public Style(final Dimension width, final Dimension height, final Color color, final String backgroundImage, final Color backgroundColor,
-            final Dimension paddingLeft, final Dimension paddingRight, final Dimension paddingBottom, final Dimension paddingTop,
-            final Dimension marginLeft, final Dimension marginRight, final Dimension marginBottom, final Dimension marginTop) {
+    public Style(Dimension width, Dimension height, Color color, String backgroundImage, Color backgroundColor, Dimension paddingLeft,
+            Dimension paddingRight, Dimension paddingBottom, Dimension paddingTop, Dimension marginLeft, Dimension marginRight,
+            Dimension marginBottom, Dimension marginTop, ChildLayout childLayout, Align align, VerticalAlign verticalAlign, String font,
+            FontSize fontSize, FontStyle fontStyle) {
         super();
         this.width = width;
         this.height = height;
@@ -97,131 +115,132 @@ public final class Style {
         this.marginRight = marginRight;
         this.marginBottom = marginBottom;
         this.marginTop = marginTop;
+        this.childLayout = childLayout;
+        this.align = align;
+        this.verticalAlign = verticalAlign;
+        this.font = font;
+        this.fontSize = fontSize;
+        this.fontStyle = fontStyle;
     }
 
     @Override
     public int hashCode() {
         final int prime = 31;
         int result = 1;
-        result = (prime * result) + ((this.backgroundColor == null) ? 0 : this.backgroundColor.hashCode());
-        result = (prime * result) + ((this.backgroundImage == null) ? 0 : this.backgroundImage.hashCode());
-        result = (prime * result) + ((this.color == null) ? 0 : this.color.hashCode());
-        result = (prime * result) + ((this.height == null) ? 0 : this.height.hashCode());
-        result = (prime * result) + ((this.marginBottom == null) ? 0 : this.marginBottom.hashCode());
-        result = (prime * result) + ((this.marginLeft == null) ? 0 : this.marginLeft.hashCode());
-        result = (prime * result) + ((this.marginRight == null) ? 0 : this.marginRight.hashCode());
-        result = (prime * result) + ((this.marginTop == null) ? 0 : this.marginTop.hashCode());
-        result = (prime * result) + ((this.paddingBottom == null) ? 0 : this.paddingBottom.hashCode());
-        result = (prime * result) + ((this.paddingLeft == null) ? 0 : this.paddingLeft.hashCode());
-        result = (prime * result) + ((this.paddingRight == null) ? 0 : this.paddingRight.hashCode());
-        result = (prime * result) + ((this.paddingTop == null) ? 0 : this.paddingTop.hashCode());
-        result = (prime * result) + ((this.width == null) ? 0 : this.width.hashCode());
+        result = prime * result + ((align == null) ? 0 : align.hashCode());
+        result = prime * result + ((backgroundColor == null) ? 0 : backgroundColor.hashCode());
+        result = prime * result + ((backgroundImage == null) ? 0 : backgroundImage.hashCode());
+        result = prime * result + ((childLayout == null) ? 0 : childLayout.hashCode());
+        result = prime * result + ((color == null) ? 0 : color.hashCode());
+        result = prime * result + ((font == null) ? 0 : font.hashCode());
+        result = prime * result + ((fontSize == null) ? 0 : fontSize.hashCode());
+        result = prime * result + ((fontStyle == null) ? 0 : fontStyle.hashCode());
+        result = prime * result + ((height == null) ? 0 : height.hashCode());
+        result = prime * result + ((marginBottom == null) ? 0 : marginBottom.hashCode());
+        result = prime * result + ((marginLeft == null) ? 0 : marginLeft.hashCode());
+        result = prime * result + ((marginRight == null) ? 0 : marginRight.hashCode());
+        result = prime * result + ((marginTop == null) ? 0 : marginTop.hashCode());
+        result = prime * result + ((paddingBottom == null) ? 0 : paddingBottom.hashCode());
+        result = prime * result + ((paddingLeft == null) ? 0 : paddingLeft.hashCode());
+        result = prime * result + ((paddingRight == null) ? 0 : paddingRight.hashCode());
+        result = prime * result + ((paddingTop == null) ? 0 : paddingTop.hashCode());
+        result = prime * result + ((verticalAlign == null) ? 0 : verticalAlign.hashCode());
+        result = prime * result + ((width == null) ? 0 : width.hashCode());
         return result;
     }
 
     @Override
-    public boolean equals(final Object obj) {
-        if (this == obj) {
+    public boolean equals(Object obj) {
+        if (this == obj)
             return true;
-        }
-        if (obj == null) {
+        if (obj == null)
             return false;
-        }
-        if (this.getClass() != obj.getClass()) {
+        if (getClass() != obj.getClass())
             return false;
-        }
-        final Style other = (Style) obj;
-        if (this.backgroundColor == null) {
-            if (other.backgroundColor != null) {
+        Style other = (Style) obj;
+        if (align != other.align)
+            return false;
+        if (backgroundColor == null) {
+            if (other.backgroundColor != null)
                 return false;
-            }
-        } else if (!this.backgroundColor.equals(other.backgroundColor)) {
+        } else if (!backgroundColor.equals(other.backgroundColor))
             return false;
-        }
-        if (this.backgroundImage == null) {
-            if (other.backgroundImage != null) {
+        if (backgroundImage == null) {
+            if (other.backgroundImage != null)
                 return false;
-            }
-        } else if (!this.backgroundImage.equals(other.backgroundImage)) {
+        } else if (!backgroundImage.equals(other.backgroundImage))
             return false;
-        }
-        if (this.color == null) {
-            if (other.color != null) {
+        if (childLayout != other.childLayout)
+            return false;
+        if (color == null) {
+            if (other.color != null)
                 return false;
-            }
-        } else if (!this.color.equals(other.color)) {
+        } else if (!color.equals(other.color))
             return false;
-        }
-        if (this.height == null) {
-            if (other.height != null) {
+        if (font == null) {
+            if (other.font != null)
                 return false;
-            }
-        } else if (!this.height.equals(other.height)) {
+        } else if (!font.equals(other.font))
             return false;
-        }
-        if (this.marginBottom == null) {
-            if (other.marginBottom != null) {
+        if (fontSize == null) {
+            if (other.fontSize != null)
                 return false;
-            }
-        } else if (!this.marginBottom.equals(other.marginBottom)) {
+        } else if (!fontSize.equals(other.fontSize))
             return false;
-        }
-        if (this.marginLeft == null) {
-            if (other.marginLeft != null) {
+        if (fontStyle != other.fontStyle)
+            return false;
+        if (height == null) {
+            if (other.height != null)
                 return false;
-            }
-        } else if (!this.marginLeft.equals(other.marginLeft)) {
+        } else if (!height.equals(other.height))
             return false;
-        }
-        if (this.marginRight == null) {
-            if (other.marginRight != null) {
+        if (marginBottom == null) {
+            if (other.marginBottom != null)
                 return false;
-            }
-        } else if (!this.marginRight.equals(other.marginRight)) {
+        } else if (!marginBottom.equals(other.marginBottom))
             return false;
-        }
-        if (this.marginTop == null) {
-            if (other.marginTop != null) {
+        if (marginLeft == null) {
+            if (other.marginLeft != null)
                 return false;
-            }
-        } else if (!this.marginTop.equals(other.marginTop)) {
+        } else if (!marginLeft.equals(other.marginLeft))
             return false;
-        }
-        if (this.paddingBottom == null) {
-            if (other.paddingBottom != null) {
+        if (marginRight == null) {
+            if (other.marginRight != null)
                 return false;
-            }
-        } else if (!this.paddingBottom.equals(other.paddingBottom)) {
+        } else if (!marginRight.equals(other.marginRight))
             return false;
-        }
-        if (this.paddingLeft == null) {
-            if (other.paddingLeft != null) {
+        if (marginTop == null) {
+            if (other.marginTop != null)
                 return false;
-            }
-        } else if (!this.paddingLeft.equals(other.paddingLeft)) {
+        } else if (!marginTop.equals(other.marginTop))
             return false;
-        }
-        if (this.paddingRight == null) {
-            if (other.paddingRight != null) {
+        if (paddingBottom == null) {
+            if (other.paddingBottom != null)
                 return false;
-            }
-        } else if (!this.paddingRight.equals(other.paddingRight)) {
+        } else if (!paddingBottom.equals(other.paddingBottom))
             return false;
-        }
-        if (this.paddingTop == null) {
-            if (other.paddingTop != null) {
+        if (paddingLeft == null) {
+            if (other.paddingLeft != null)
                 return false;
-            }
-        } else if (!this.paddingTop.equals(other.paddingTop)) {
+        } else if (!paddingLeft.equals(other.paddingLeft))
             return false;
-        }
-        if (this.width == null) {
-            if (other.width != null) {
+        if (paddingRight == null) {
+            if (other.paddingRight != null)
                 return false;
-            }
-        } else if (!this.width.equals(other.width)) {
+        } else if (!paddingRight.equals(other.paddingRight))
             return false;
-        }
+        if (paddingTop == null) {
+            if (other.paddingTop != null)
+                return false;
+        } else if (!paddingTop.equals(other.paddingTop))
+            return false;
+        if (verticalAlign != other.verticalAlign)
+            return false;
+        if (width == null) {
+            if (other.width != null)
+                return false;
+        } else if (!width.equals(other.width))
+            return false;
         return true;
     }
 
@@ -277,12 +296,37 @@ public final class Style {
         return this.height;
     }
 
+    public String getFont() {
+        return font;
+    }
+
+    public FontSize getFontSize() {
+        return fontSize;
+    }
+
+    public FontStyle getFontStyle() {
+        return fontStyle;
+    }
+
+    public Align getAlign() {
+        return align;
+    }
+
+    public VerticalAlign getVerticalAlign() {
+        return verticalAlign;
+    }
+
+    public ChildLayout getChildLayout() {
+        return childLayout;
+    }
+
     @Override
     public String toString() {
-        return "Style [width=" + this.width + ", height=" + this.height + ", backgroundImage=" + this.backgroundImage + ", backgroundColor="
-                + this.backgroundColor + ", color=" + this.color + ", paddingLeft=" + this.paddingLeft + ", paddingRight=" + this.paddingRight
-                + ", paddingBottom=" + this.paddingBottom + ", paddingTop=" + this.paddingTop + ", marginLeft=" + this.marginLeft + ", marginRight="
-                + this.marginRight + ", marginBottom=" + this.marginBottom + ", marginTop=" + this.marginTop + "]";
+        return "Style [width=" + width + ", height=" + height + ", color=" + color + ", backgroundImage=" + backgroundImage + ", backgroundColor="
+                + backgroundColor + ", paddingLeft=" + paddingLeft + ", paddingRight=" + paddingRight + ", paddingBottom=" + paddingBottom
+                + ", paddingTop=" + paddingTop + ", marginLeft=" + marginLeft + ", marginRight=" + marginRight + ", marginBottom=" + marginBottom
+                + ", marginTop=" + marginTop + ", font=" + font + ", fontSize=" + fontSize + ", fontStyle=" + fontStyle + ", align=" + align
+                + ", verticalAlign=" + verticalAlign + ", childLayout=" + childLayout + "]";
     }
 
 }

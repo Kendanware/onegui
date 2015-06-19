@@ -58,51 +58,44 @@ public class ColorTest {
         Assert.assertEquals(ColorTest.ALPHA_1, color.getAlpha(), 0.001f);
     }
 
-    @Test
-    public void testColorFloatFloatFloatFloatRanges() {
-        try {
-            new Color(ColorTest.LOW_VALUE, ColorTest.GREEN_1, ColorTest.BLUE_1, ColorTest.ALPHA_1);
-            Assert.fail();
-        } catch (final IllegalArgumentException e) {
-        }
-        try {
-            new Color(ColorTest.HIGH_VALUE, ColorTest.GREEN_1, ColorTest.BLUE_1, ColorTest.ALPHA_1);
-            Assert.fail();
-        } catch (final IllegalArgumentException e) {
-        }
+    @Test(expected = IllegalArgumentException.class)
+    public void testColorFloatFloatFloatFloatRangesLowRed() {
+        new Color(ColorTest.LOW_VALUE, ColorTest.GREEN_1, ColorTest.BLUE_1, ColorTest.ALPHA_1);
+    }
 
-        try {
-            new Color(ColorTest.RED_1, ColorTest.LOW_VALUE, ColorTest.BLUE_1, ColorTest.ALPHA_1);
-            Assert.fail();
-        } catch (final IllegalArgumentException e) {
-        }
-        try {
-            new Color(ColorTest.RED_1, ColorTest.HIGH_VALUE, ColorTest.BLUE_1, ColorTest.ALPHA_1);
-            Assert.fail();
-        } catch (final IllegalArgumentException e) {
-        }
+    @Test(expected = IllegalArgumentException.class)
+    public void testColorFloatFloatFloatFloatRangesHighRed() {
+        new Color(ColorTest.HIGH_VALUE, ColorTest.GREEN_1, ColorTest.BLUE_1, ColorTest.ALPHA_1);
+    }
 
-        try {
-            new Color(ColorTest.RED_1, ColorTest.GREEN_1, ColorTest.LOW_VALUE, ColorTest.ALPHA_1);
-            Assert.fail();
-        } catch (final IllegalArgumentException e) {
-        }
-        try {
-            new Color(ColorTest.RED_1, ColorTest.GREEN_1, ColorTest.HIGH_VALUE, ColorTest.ALPHA_1);
-            Assert.fail();
-        } catch (final IllegalArgumentException e) {
-        }
+    @Test(expected = IllegalArgumentException.class)
+    public void testColorFloatFloatFloatFloatRangesLowGreen() {
+        new Color(ColorTest.RED_1, ColorTest.LOW_VALUE, ColorTest.BLUE_1, ColorTest.ALPHA_1);
+    }
 
-        try {
-            new Color(ColorTest.RED_1, ColorTest.GREEN_1, ColorTest.BLUE_1, ColorTest.LOW_VALUE);
-            Assert.fail();
-        } catch (final IllegalArgumentException e) {
-        }
-        try {
-            new Color(ColorTest.RED_1, ColorTest.GREEN_1, ColorTest.BLUE_1, ColorTest.HIGH_VALUE);
-            Assert.fail();
-        } catch (final IllegalArgumentException e) {
-        }
+    @Test(expected = IllegalArgumentException.class)
+    public void testColorFloatFloatFloatFloatRangesHighGreen() {
+        new Color(ColorTest.RED_1, ColorTest.HIGH_VALUE, ColorTest.BLUE_1, ColorTest.ALPHA_1);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testColorFloatFloatFloatFloatRangesLowBlue() {
+        new Color(ColorTest.RED_1, ColorTest.GREEN_1, ColorTest.LOW_VALUE, ColorTest.ALPHA_1);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testColorFloatFloatFloatFloatRangesHighBlue() {
+        new Color(ColorTest.RED_1, ColorTest.GREEN_1, ColorTest.HIGH_VALUE, ColorTest.ALPHA_1);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testColorFloatFloatFloatFloatRangesLowAlpha() {
+        new Color(ColorTest.RED_1, ColorTest.GREEN_1, ColorTest.BLUE_1, ColorTest.LOW_VALUE);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testColorFloatFloatFloatFloatRangesHighAlpha() {
+        new Color(ColorTest.RED_1, ColorTest.GREEN_1, ColorTest.BLUE_1, ColorTest.HIGH_VALUE);
     }
 
     @Test
@@ -114,44 +107,44 @@ public class ColorTest {
         Assert.assertEquals(ColorTest.BLUE_1, color.getBlue(), 0.01f);
         Assert.assertEquals(ColorTest.ALPHA_1, color.getAlpha(), 0.01f);
 
-        final Color color2 = new Color("#ffffffff");
+        final Color colorWhite = new Color("#ffffffff");
 
-        Assert.assertEquals(1.0f, color2.getRed(), 0.01f);
-        Assert.assertEquals(1.0f, color2.getGreen(), 0.01f);
-        Assert.assertEquals(1.0f, color2.getBlue(), 0.01f);
-        Assert.assertEquals(1.0f, color2.getAlpha(), 0.01f);
+        Assert.assertEquals(1.0f, colorWhite.getRed(), 0.01f);
+        Assert.assertEquals(1.0f, colorWhite.getGreen(), 0.01f);
+        Assert.assertEquals(1.0f, colorWhite.getBlue(), 0.01f);
+        Assert.assertEquals(1.0f, colorWhite.getAlpha(), 0.01f);
+
+        final Color colorTransparent = new Color("#00000000");
+
+        Assert.assertEquals(0.0f, colorTransparent.getRed(), 0.01f);
+        Assert.assertEquals(0.0f, colorTransparent.getGreen(), 0.01f);
+        Assert.assertEquals(0.0f, colorTransparent.getBlue(), 0.01f);
+        Assert.assertEquals(0.0f, colorTransparent.getAlpha(), 0.01f);
     }
 
-    @Test
-    public void testColorStringRanges() {
-        try {
-            new Color("1a344Eff");
-            Assert.fail();
-        } catch (final IllegalArgumentException e) {
-        }
+    @Test(expected = IllegalArgumentException.class)
+    public void testColorStringRangesNoHash() {
+        new Color("1a344Eff");
+    }
 
-        try {
-            new Color("#1a344Efh");
-            Assert.fail();
-        } catch (final IllegalArgumentException e) {
-        }
+    @Test(expected = IllegalArgumentException.class)
+    public void testColorStringRangesInvalidHex() {
+        new Color("#1a344Efh");
+    }
 
-        try {
-            new Color("#1a344E");
-            Assert.fail();
-        } catch (final IllegalArgumentException e) {
-        }
-        try {
-            new Color(null);
-            Assert.fail();
-        } catch (final IllegalArgumentException e) {
-        }
+    @Test(expected = IllegalArgumentException.class)
+    public void testColorStringRangesTooShortHex() {
+        new Color("#1a344E");
+    }
 
-        try {
-            new Color("");
-            Assert.fail();
-        } catch (final IllegalArgumentException e) {
-        }
+    @Test(expected = IllegalArgumentException.class)
+    public void testColorStringRangesNull() {
+        new Color(null);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testColorStringRangesEmpty() {
+        new Color("");
     }
 
     @Test

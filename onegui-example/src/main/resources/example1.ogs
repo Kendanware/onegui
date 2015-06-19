@@ -1,0 +1,72 @@
+screen {
+	backgroundColor: white;
+	backgroundImage: "/screen-background.jpg";
+}
+
+panelLeft {
+	width: 20%;
+	backgroundColor: #eeeeee7f;
+	childLayout: down;
+	align: center;
+	paddingTop: 10%;
+	paddingLeft: 10%;
+	paddingRight: 10%;
+	paddingBottom: 20%;
+}
+
+panelCenterSpace {
+	width: 20%;
+	height: 1px;
+}
+
+panelRight {
+	width: 60%;
+	backgroundColor: #dddddd7f;
+	paddingLeft: 20%;
+	paddingRight: 30%;
+	paddingTop: 5%;
+	childLayout: down;
+}
+
+startNewGame {
+	width: 80%;
+	height: 20%w;
+	backgroundColor: blue;
+	marginTop: 5px;
+	marginBottom: 5px;
+	marginLeft: 5px;
+	marginRight: 5px;
+}
+
+showSettings {
+	width: 80%;
+	height: 20%w;
+	backgroundColor: navy;
+		marginTop: 5px;
+	marginBottom: 5px;
+	marginLeft: 5px;
+	marginRight: 5px;
+
+}
+
+saveSettings {
+	height: 5%;
+	backgroundColor: #ddddddaa;
+	marginTop: 1%;
+}
+
+label1, label2, label3 {
+	color: black;
+	height: 5%;
+	font: "/Tuffy.ttf";
+	fontSize: 2;
+}
+
+label1 {
+}
+label2 {
+	fontStyle: bold;
+}
+label3 {
+	fontStyle: italic;
+}

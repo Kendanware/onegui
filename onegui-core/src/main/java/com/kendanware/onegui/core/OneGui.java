@@ -28,17 +28,23 @@
  */
 package com.kendanware.onegui.core;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Collections;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
+import com.kendanware.onegui.core.assets.AssetHolder;
 import com.kendanware.onegui.core.style.Style;
 import com.kendanware.onegui.core.style.StyleParser;
 
 /**
+ * Main class for OneGui.
  *
  * @author Daniel Johansson, Kendanware
  * @author Kenny Colliander Nordin, Kendanware
@@ -46,14 +52,32 @@ import com.kendanware.onegui.core.style.StyleParser;
  * @since 0.0.1
  */
 public class OneGui {
+
     private final Map<String, Screen> screens = new ConcurrentHashMap<>();
 
     private final Lock screensLock = new ReentrantLock();
 
     private final Map<String, Style> styles = new ConcurrentHashMap<>();
 
-    private Screen current;
+    private final AssetHolder assetHolder;
 
+    private ExecutorService executorService = Executors.newFixedThreadPool(1 + (Runtime.getRuntime().availableProcessors() / 2));
+
+    public OneGui() {
+        this(new AssetHolder(new GraphicsSettings()));
+    }
+
+    public OneGui(AssetHolder assetHolder) {
+        super();
+        this.assetHolder = assetHolder;
+    }
+
+    /**
+     * Add screen
+     * 
+     * @param screen
+     *            the screen
+     */
     public void addScreen(final Screen screen) {
         this.screensLock.lock();
         try {
@@ -67,6 +91,12 @@ public class OneGui {
         }
     }
 
+    /**
+     * Remove screen
+     * 
+     * @param screen
+     *            the screen
+     */
     public void removeScreen(final Screen screen) {
         this.screensLock.lock();
         try {
@@ -76,6 +106,13 @@ public class OneGui {
         }
     }
 
+    /**
+     * Add styles
+     * 
+     * @param inputStream
+     *            the .ogs stream
+     * @throws IOException
+     */
     public void addStyles(final InputStream inputStream) throws IOException {
 
         try {
@@ -86,4 +123,50 @@ public class OneGui {
         }
     }
 
+    /**
+     * Add styles
+     * 
+     * @param style
+     *            .ogs formatted data
+     * @throws IOException
+     */
+    public void addStyles(final String style) throws IOException {
+
+        try (final InputStream inputStream = new ByteArrayInputStream(style.getBytes("UTF-8"))) {
+            final StyleParser styleParser = new StyleParser();
+            this.styles.putAll(styleParser.parseStyle(inputStream));
+        }
+    }
+
+    /**
+     * Remove style
+     * 
+     * @param styleName
+     *            the style to remove
+     */
+    public void removeStyle(final String styleName) {
+        this.styles.remove(styleName);
+    }
+
+    public Map<String, Style> getStyles() {
+        return Collections.unmodifiableMap(styles);
+    }
+
+    public AssetHolder getAssetHolder() {
+        return assetHolder;
+    }
+
+    /**
+     * Execute a task
+     * 
+     * @param runnable
+     *            the task to execute
+     */
+    public void execute(Runnable runnable) {
+        this.executorService.execute(runnable);
+    }
+
+    public void shutdown() {
+        this.executorService.shutdown();
+    }
 }

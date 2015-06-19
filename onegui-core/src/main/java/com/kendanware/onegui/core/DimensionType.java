@@ -65,7 +65,7 @@ public enum DimensionType {
     /**
      * @return the suffix related to the dimension
      */
-    public String getSuffix() {
+    String getSuffix() {
         return this.suffix;
     }
 
@@ -78,7 +78,7 @@ public enum DimensionType {
      * @throws IllegalArgumentException
      *             if <code>stringValue</code> is null or if no dimension could be matched.
      */
-    public static DimensionType detectType(final String stringValue) {
+    static DimensionType detectType(final String stringValue) {
 
         if (stringValue == null) {
             throw new IllegalArgumentException("Invalid dimension: null");
@@ -102,7 +102,7 @@ public enum DimensionType {
      * @throws IllegalArgumentException
      *             if <code>stringValue</code> is null, or if no dimension could be matched, or size is out of range.
      */
-    public float parseSize(final String stringValue) {
+    float parseSize(final String stringValue) {
 
         if (stringValue == null) {
             throw new IllegalArgumentException("Invalid dimension: null");

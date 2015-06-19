@@ -1,0 +1,41 @@
+panelPercent {
+	width: 20%;
+	height: 80%;
+}
+
+panelPixel {
+	width: 20px;
+	height: 90px;
+}
+
+panelWidthPercent {
+	width: 20%h;
+	height: 80%;
+}
+
+panelHeightPercent {
+	width: 20%;
+	height: 80%w;
+}
+
+
+panelMarginPixel {
+	width: 20%;
+	height: 80%;
+	marginLeft: 10px;
+	marginRight: 20px;
+}
+
+panelMarginPercent {
+	width: 20%;
+	height: 80%;
+	marginLeft: 10%;
+	marginRight: 20%;
+}
+
+panelMarginWidthPercent {
+	width: 20%;
+	height: 80%;
+	marginLeft: 10%h;
+	marginRight: 20%h;
+}
