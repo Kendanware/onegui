@@ -28,7 +28,10 @@
  */
 package com.kendanware.onegui.core.assets;
 
-import java.awt.Graphics2D;
+import com.kendanware.onegui.core.GraphicsSettings;
+
+import javax.imageio.ImageIO;
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.awt.image.ColorModel;
 import java.awt.image.WritableRaster;
@@ -36,10 +39,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
-
-import javax.imageio.ImageIO;
-
-import com.kendanware.onegui.core.GraphicsSettings;
 
 /**
  * Load and cache images
@@ -148,7 +147,7 @@ public class ImageResourceFactory {
      */
     BufferedImage resizeImage(final BufferedImage bufferedImage, final int width, final int height) throws IOException, IllegalArgumentException {
 
-        final BufferedImage resizedImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+        final BufferedImage resizedImage = new BufferedImage(width, height, BufferedImage.TYPE_4BYTE_ABGR);
         final Graphics2D graphics2D = resizedImage.createGraphics();
 
         try {

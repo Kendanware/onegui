@@ -28,18 +28,14 @@
  */
 package com.kendanware.onegui.core.renderer.component;
 
-import java.awt.Graphics2D;
-import java.awt.image.BufferedImage;
-import java.io.IOException;
-
 import com.kendanware.onegui.core.Color;
 import com.kendanware.onegui.core.Component;
-import com.kendanware.onegui.core.renderer.ComponentInfo;
-import com.kendanware.onegui.core.renderer.ComponentRenderer;
-import com.kendanware.onegui.core.renderer.OneGuiRenderer;
-import com.kendanware.onegui.core.renderer.RendererMath;
-import com.kendanware.onegui.core.renderer.RenderingState;
+import com.kendanware.onegui.core.renderer.*;
 import com.kendanware.onegui.core.style.Style;
+
+import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
 
 /**
  * The default implementaton of a <code>ComponentRenderer</code>. Draw background color or image, and traverse children if the component is an
@@ -68,7 +64,7 @@ public abstract class DefaultComponentRenderer implements ComponentRenderer {
         final int width = Math.round(componentInfo.getWidth());
         final int height = Math.round(componentInfo.getHeight());
 
-        final BufferedImage bufferedImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+        final BufferedImage bufferedImage = new BufferedImage(width, height, BufferedImage.TYPE_4BYTE_ABGR);
         final Graphics2D graphics = bufferedImage.createGraphics();
         oneGuiRenderer.getGraphicsSettings().apply(graphics);
 

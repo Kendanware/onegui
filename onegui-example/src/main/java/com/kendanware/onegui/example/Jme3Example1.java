@@ -20,7 +20,7 @@ import com.kendanware.onegui.core.control.Label;
 import com.kendanware.onegui.core.renderer.OneGuiRenderer;
 
 import java.awt.image.BufferedImage;
-import java.awt.image.DataBufferInt;
+import java.awt.image.DataBufferByte;
 import java.io.InputStream;
 import java.nio.ByteBuffer;
 import java.util.concurrent.TimeUnit;
@@ -35,7 +35,6 @@ public class Jme3Example1 extends SimpleApplication {
     private OneGuiRenderer oneGuiRenderer;
     private Image image;
     private ByteBuffer byteBuffer;
-    private BufferedImage bufferedImage;
     private Label label;
     private Texture2D texture;
     private long lastUpdated;
@@ -90,12 +89,13 @@ public class Jme3Example1 extends SimpleApplication {
         oneGuiRenderer = new OneGuiRenderer(screen, 1280, 720);
         oneGuiRenderer.update(1);
 
-        bufferedImage = oneGuiRenderer.generateImage();
+        final BufferedImage bufferedImage = oneGuiRenderer.generateImage();
         image = new AWTLoader().load(bufferedImage, true);
 
-        final int[] pixels = bufferedImage.getRGB(0, 0, (int) oneGuiRenderer.getWidth(), (int) oneGuiRenderer.getHeight(), null, 0, (int) oneGuiRenderer.getWidth());
-        byteBuffer = BufferUtils.createByteBuffer(pixels.length * 4);
-        byteBuffer.asIntBuffer().put(pixels);
+        final byte[] pixels = ((DataBufferByte) bufferedImage.getRaster().getDataBuffer()).getData();
+        flipImage(pixels, (int) oneGuiRenderer.getWidth(), (int) oneGuiRenderer.getHeight(), bufferedImage.getColorModel().getPixelSize());
+        byteBuffer = BufferUtils.createByteBuffer(pixels.length);
+        byteBuffer.put(pixels);
         byteBuffer.flip();
 
         texture = new Texture2D(image);
@@ -119,13 +119,12 @@ public class Jme3Example1 extends SimpleApplication {
             return;
         }
 
-        final int[] pixels = ((DataBufferInt) bufferedImage.getRaster().getDataBuffer()).getData();
+        final byte[] pixels = ((DataBufferByte) bufferedImage.getRaster().getDataBuffer()).getData();
         flipImage(pixels, (int) oneGuiRenderer.getWidth(), (int) oneGuiRenderer.getHeight(), bufferedImage.getColorModel().getPixelSize());
         byteBuffer.clear();
-        byteBuffer.asIntBuffer().put(pixels);
+        byteBuffer.put(pixels);
         byteBuffer.flip();
         image.setData(byteBuffer);
-        this.bufferedImage = bufferedImage;
         lastUpdated = timer.getTime();
 
         label.setText(System.currentTimeMillis() + "");
@@ -146,10 +145,9 @@ public class Jme3Example1 extends SimpleApplication {
         example.start(JmeContext.Type.Display);
     }
 
-    private void flipImage(int[] img, int width, int height, int bpp) {
+    private void flipImage(byte[] img, int width, int height, int bpp) {
         int scSz = (width * bpp) / 8;
-        scSz /= 4;
-        int[] sln = new int[scSz];
+        byte[] sln = new byte[scSz];
         int y2 = 0;
         for (int y1 = 0; y1 < height / 2; y1++) {
             y2 = height - y1 - 1;
@@ -158,5 +156,4 @@ public class Jme3Example1 extends SimpleApplication {
             System.arraycopy(sln, 0, img, y2 * scSz, scSz);
         }
     }
-
 }
