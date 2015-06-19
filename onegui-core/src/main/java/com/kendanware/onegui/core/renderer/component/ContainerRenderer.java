@@ -30,6 +30,7 @@ package com.kendanware.onegui.core.renderer.component;
 
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.kendanware.onegui.core.Component;
@@ -37,6 +38,7 @@ import com.kendanware.onegui.core.Container;
 import com.kendanware.onegui.core.renderer.ComponentInfo;
 import com.kendanware.onegui.core.renderer.ComponentRendererFactory;
 import com.kendanware.onegui.core.renderer.OneGuiRenderer;
+import com.kendanware.onegui.core.renderer.RenderingState;
 
 /**
  * Renderer for the <code>Container</code> subclass component.
@@ -68,6 +70,58 @@ public class ContainerRenderer extends DefaultComponentRenderer {
 
             graphics.setColor(new java.awt.Color(0.0f, 0.0f, 0.0f, 0.1f));
             graphics.drawImage(childImage, Math.round(childRendererInfo.getX()), Math.round(childRendererInfo.getY()), null);
+        }
+    }
+
+    @Override
+    public RenderingState getState(OneGuiRenderer oneGuiRenderer, Component component, ComponentInfo componentInfo) {
+
+        List<RenderingState> renderingStates = new ArrayList<RenderingState>();
+        final List<Component> children = ((Container) component).getChildren();
+
+        for (final Component child : children) {
+
+            final ComponentInfo childRendererInfo = oneGuiRenderer.getComponentInfos().get(child.getId());
+            final RenderingState state = ComponentRendererFactory.getRenderHandler(child.getClass()).getState(oneGuiRenderer, child,
+                    childRendererInfo);
+
+            renderingStates.add(state);
+        }
+
+        return new ContainerRenderingState(renderingStates);
+    }
+
+    private static class ContainerRenderingState implements RenderingState {
+        private final List<RenderingState> renderingStates;
+
+        public ContainerRenderingState(List<RenderingState> renderingStates) {
+            super();
+            this.renderingStates = renderingStates;
+        }
+
+        @Override
+        public int hashCode() {
+            final int prime = 31;
+            int result = 1;
+            result = prime * result + ((renderingStates == null) ? 0 : renderingStates.hashCode());
+            return result;
+        }
+
+        @Override
+        public boolean equals(Object obj) {
+            if (this == obj)
+                return true;
+            if (obj == null)
+                return false;
+            if (getClass() != obj.getClass())
+                return false;
+            ContainerRenderingState other = (ContainerRenderingState) obj;
+            if (renderingStates == null) {
+                if (other.renderingStates != null)
+                    return false;
+            } else if (!renderingStates.equals(other.renderingStates))
+                return false;
+            return true;
         }
     }
 }

@@ -38,6 +38,7 @@ import com.kendanware.onegui.core.renderer.ComponentInfo;
 import com.kendanware.onegui.core.renderer.ComponentRenderer;
 import com.kendanware.onegui.core.renderer.OneGuiRenderer;
 import com.kendanware.onegui.core.renderer.RendererMath;
+import com.kendanware.onegui.core.renderer.RenderingState;
 import com.kendanware.onegui.core.style.Style;
 
 /**
@@ -54,10 +55,14 @@ public abstract class DefaultComponentRenderer implements ComponentRenderer {
     @Override
     public BufferedImage render(final OneGuiRenderer oneGuiRenderer, Component component, ComponentInfo componentInfo) {
 
-        final BufferedImage cachedImage = oneGuiRenderer.getRenderedImages().get(component.getId());
+        final RenderingState renderingState = getState(oneGuiRenderer, component, componentInfo);
 
-        if (cachedImage != null) {
-            return cachedImage;
+        if (renderingState.equals(oneGuiRenderer.getLastState().get(component.getId()))) {
+            final BufferedImage cachedImage = oneGuiRenderer.getRenderedImages().get(component.getId());
+
+            if (cachedImage != null) {
+                return cachedImage;
+            }
         }
 
         final int width = Math.round(componentInfo.getWidth());
@@ -71,6 +76,7 @@ public abstract class DefaultComponentRenderer implements ComponentRenderer {
 
         graphics.dispose();
         oneGuiRenderer.getRenderedImages().put(component.getId(), bufferedImage);
+        renderingState.equals(oneGuiRenderer.getLastState().put(component.getId(), renderingState));
         return bufferedImage;
     }
 

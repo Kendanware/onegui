@@ -55,6 +55,8 @@ public class OneGuiRenderer {
 
     private final Map<String, BufferedImage> renderedImages = new ConcurrentHashMap<>();
 
+    private final Map<String, RenderingState> lastState = new ConcurrentHashMap<>();
+
     private final GraphicsSettings graphicsSettings;
 
     public OneGuiRenderer(final Screen screen, final float width, final float height) {
@@ -111,6 +113,10 @@ public class OneGuiRenderer {
 
     public GraphicsSettings getGraphicsSettings() {
         return graphicsSettings;
+    }
+
+    public Map<String, RenderingState> getLastState() {
+        return lastState;
     }
 
 }

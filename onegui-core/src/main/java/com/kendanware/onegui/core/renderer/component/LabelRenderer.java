@@ -42,6 +42,7 @@ import com.kendanware.onegui.core.control.Label;
 import com.kendanware.onegui.core.renderer.ComponentInfo;
 import com.kendanware.onegui.core.renderer.OneGuiRenderer;
 import com.kendanware.onegui.core.renderer.RendererMath;
+import com.kendanware.onegui.core.renderer.RenderingState;
 import com.kendanware.onegui.core.style.Style;
 
 /**
@@ -104,6 +105,46 @@ public class LabelRenderer extends DefaultComponentRenderer {
         }
 
         graphics.drawString(label.getText(), x, y);
+    }
+
+    @Override
+    public RenderingState getState(OneGuiRenderer oneGuiRenderer, Component component, ComponentInfo componentInfo) {
+        Label label = (Label) component;
+        return new LabelRenderingState(label.getText());
+    }
+
+    private static class LabelRenderingState implements RenderingState {
+        private final String text;
+
+        public LabelRenderingState(String text) {
+            super();
+            this.text = text;
+        }
+
+        @Override
+        public int hashCode() {
+            final int prime = 31;
+            int result = 1;
+            result = prime * result + ((text == null) ? 0 : text.hashCode());
+            return result;
+        }
+
+        @Override
+        public boolean equals(Object obj) {
+            if (this == obj)
+                return true;
+            if (obj == null)
+                return false;
+            if (getClass() != obj.getClass())
+                return false;
+            LabelRenderingState other = (LabelRenderingState) obj;
+            if (text == null) {
+                if (other.text != null)
+                    return false;
+            } else if (!text.equals(other.text))
+                return false;
+            return true;
+        }
     }
 
 }
