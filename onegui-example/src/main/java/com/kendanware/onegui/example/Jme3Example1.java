@@ -38,7 +38,7 @@ public class Jme3Example1 extends SimpleApplication {
     private BufferedImage bufferedImage;
     private Label label;
     private Texture2D texture;
-    private long lastUpdate;
+    private long lastUpdated;
 
     @Override
     public void simpleInitApp() {
@@ -106,7 +106,7 @@ public class Jme3Example1 extends SimpleApplication {
         picture.setPosition(0, 0);
         picture.setTexture(assetManager, texture, true);
 
-        //guiNode.attachChild(picture);
+        guiNode.attachChild(picture);
     }
 
     @Override
@@ -115,19 +115,20 @@ public class Jme3Example1 extends SimpleApplication {
         oneGuiRenderer.update(tpf);
         final BufferedImage bufferedImage = oneGuiRenderer.generateImage();
 
-        if (this.bufferedImage != bufferedImage && timer.getTime() - lastUpdate > TimeUnit.NANOSECONDS.toMillis(10)) {
-            final int[] pixels = ((DataBufferInt) bufferedImage.getRaster().getDataBuffer()).getData();
-            flipImage(pixels, (int) oneGuiRenderer.getWidth(), (int) oneGuiRenderer.getHeight(), bufferedImage.getColorModel().getPixelSize());
-            byteBuffer.clear();
-            byteBuffer.asIntBuffer().put(pixels);
-            byteBuffer.flip();
-            image.setData(byteBuffer);
-            this.bufferedImage = bufferedImage;
-            lastUpdate = timer.getTime();
+        if (timer.getTime() - lastUpdated < TimeUnit.MILLISECONDS.toNanos(40)) {
+            return;
         }
 
+        final int[] pixels = ((DataBufferInt) bufferedImage.getRaster().getDataBuffer()).getData();
+        flipImage(pixels, (int) oneGuiRenderer.getWidth(), (int) oneGuiRenderer.getHeight(), bufferedImage.getColorModel().getPixelSize());
+        byteBuffer.clear();
+        byteBuffer.asIntBuffer().put(pixels);
+        byteBuffer.flip();
+        image.setData(byteBuffer);
+        this.bufferedImage = bufferedImage;
+        lastUpdated = timer.getTime();
+
         label.setText(System.currentTimeMillis() + "");
-        oneGuiRenderer.getRenderedImages().clear();
     }
 
     @Override
@@ -145,16 +146,16 @@ public class Jme3Example1 extends SimpleApplication {
         example.start(JmeContext.Type.Display);
     }
 
-    private void flipImage(int[] img, int width, int height, int bpp){
+    private void flipImage(int[] img, int width, int height, int bpp) {
         int scSz = (width * bpp) / 8;
         scSz /= 4;
         int[] sln = new int[scSz];
         int y2 = 0;
-        for (int y1 = 0; y1 < height / 2; y1++){
+        for (int y1 = 0; y1 < height / 2; y1++) {
             y2 = height - y1 - 1;
-            System.arraycopy(img, y1 * scSz, sln, 0,         scSz);
+            System.arraycopy(img, y1 * scSz, sln, 0, scSz);
             System.arraycopy(img, y2 * scSz, img, y1 * scSz, scSz);
-            System.arraycopy(sln, 0,         img, y2 * scSz, scSz);
+            System.arraycopy(sln, 0, img, y2 * scSz, scSz);
         }
     }
 
