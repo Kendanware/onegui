@@ -113,12 +113,12 @@ public class Jme3Example1 extends SimpleApplication {
     public void simpleUpdate(float tpf) {
         super.simpleUpdate(tpf);
         oneGuiRenderer.update(tpf);
-        final BufferedImage bufferedImage = oneGuiRenderer.generateImage();
 
         if (timer.getTime() - lastUpdated < TimeUnit.MILLISECONDS.toNanos(40)) {
             return;
         }
 
+        final BufferedImage bufferedImage = oneGuiRenderer.generateImage();
         final byte[] pixels = ((DataBufferByte) bufferedImage.getRaster().getDataBuffer()).getData();
         flipImage(pixels, (int) oneGuiRenderer.getWidth(), (int) oneGuiRenderer.getHeight(), bufferedImage.getColorModel().getPixelSize());
         byteBuffer.clear();
